@@ -2,6 +2,8 @@
 # Makefile for building the SELinux module as part of the kernel tree.
 #
 
+<<<<<<< HEAD
+=======
 ## SEC_SELINUX
 ifeq ($(TARGET_BUILD_VARIANT), eng)
 ifeq ($(SEC_BUILD_OPTION_PRODUCT_SHIP), false)
@@ -11,6 +13,7 @@ endif
 endif
 endif
 
+>>>>>>> 10f7053... selinux: Allow SELinux to be Permissive or Enforcing
 obj-$(CONFIG_SECURITY_SELINUX) := selinux.o
 
 selinux-y := avc.o hooks.o selinuxfs.o netlink.o nlmsgtab.o netif.o \

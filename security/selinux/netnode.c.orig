@@ -303,10 +303,13 @@ void sel_netnode_flush(void)
 static __init int sel_netnode_init(void)
 {
 	int iter;
+<<<<<<< HEAD
+=======
 	
 #ifdef CONFIG_SECURITY_SELINUX_ALWAYS_ENFORCE
 	selinux_enabled = 1;
 #endif
+>>>>>>> 10f7053... selinux: Allow SELinux to be Permissive or Enforcing
 
 	if (!selinux_enabled)
 		return 0;

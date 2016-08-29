@@ -276,10 +276,13 @@ static struct notifier_block sel_netif_netdev_notifier = {
 static __init int sel_netif_init(void)
 {
 	int i;
+<<<<<<< HEAD
+=======
 	
 #ifdef CONFIG_SECURITY_SELINUX_ALWAYS_ENFORCE
 	selinux_enabled = 1;
 #endif
+>>>>>>> 10f7053... selinux: Allow SELinux to be Permissive or Enforcing
 
 	if (!selinux_enabled)
 		return 0;

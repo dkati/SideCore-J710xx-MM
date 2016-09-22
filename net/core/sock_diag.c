@@ -199,18 +199,6 @@ static void sock_diag_rcv(struct sk_buff *skb)
 	mutex_unlock(&sock_diag_mutex);
 }
 
-int sock_diag_destroy(struct sock *sk, int err)
-{
-	if (!ns_capable(sock_net(sk)->user_ns, CAP_NET_ADMIN))
-		return -EPERM;
-
-	if (!sk->sk_prot->diag_destroy)
-		return -EOPNOTSUPP;
-
-	return sk->sk_prot->diag_destroy(sk, err);
-}
-EXPORT_SYMBOL_GPL(sock_diag_destroy);
-
 static int __net_init diag_net_init(struct net *net)
 {
 	struct netlink_kernel_cfg cfg = {

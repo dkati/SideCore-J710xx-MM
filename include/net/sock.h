@@ -77,8 +77,8 @@
 #include <linux/atomic.h>
 #include <net/dst.h>
 #include <net/checksum.h>
-#include <linux/net_tstamp.h>
 #include <net/tcp_states.h>
+#include <linux/net_tstamp.h>
 
 struct cgroup;
 struct cgroup_subsys;
@@ -726,6 +726,9 @@ enum sock_flags {
 		     */
 	SOCK_FILTER_LOCKED, /* Filter cannot be changed anymore */
 	SOCK_SELECT_ERR_QUEUE, /* Wake select on error queue */
+#ifdef CONFIG_MPTCP
+	SOCK_MPTCP, /* MPTCP set on this socket */
+#endif
 };
 
 static inline void sock_copy_flags(struct sock *nsk, struct sock *osk)
@@ -926,6 +929,18 @@ void sk_clear_memalloc(struct sock *sk);
 
 int sk_wait_data(struct sock *sk, long *timeo);
 
+#ifdef CONFIG_MPTCP
+/* START - needed for MPTCP */
+struct sock *sk_prot_alloc(struct proto *prot, gfp_t priority, int family);
+void sock_lock_init(struct sock *sk);
+
+extern struct lock_class_key af_callback_keys[AF_MAX];
+extern char *const af_family_clock_key_strings[AF_MAX+1];
+
+#define SK_FLAGS_TIMESTAMP ((1UL << SOCK_TIMESTAMP) | (1UL << SOCK_TIMESTAMPING_RX_SOFTWARE))
+/* END - needed for MPTCP */
+#endif
+
 struct request_sock_ops;
 struct timewait_sock_ops;
 struct inet_hashinfo;
@@ -1062,7 +1077,6 @@ struct proto {
 	void			(*destroy_cgroup)(struct mem_cgroup *memcg);
 	struct cg_proto		*(*proto_cgroup)(struct mem_cgroup *memcg);
 #endif
-	int			(*diag_destroy)(struct sock *sk, int err);
 };
 
 /*
@@ -2284,11 +2298,10 @@ static inline struct sock *skb_steal_sock(struct sk_buff *skb)
 
 /* This helper checks if a socket is a full socket,
  * ie _not_ a timewait or request socket.
- * TODO: Check for TCPF_NEW_SYN_RECV when that starts to exist.
  */
 static inline bool sk_fullsock(const struct sock *sk)
 {
-	return (1 << sk->sk_state) & ~(TCPF_TIME_WAIT);
+	return (1 << sk->sk_state) & ~(TCPF_TIME_WAIT | TCPF_NEW_SYN_RECV);
 }
 
 void sock_enable_timestamp(struct sock *sk, int flag);

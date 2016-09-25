@@ -131,12 +131,19 @@ out_noerr:
 }
 
 <<<<<<< HEAD
+static int skb_set_peeked(struct sk_buff *skb)
+=======
 static struct sk_buff *skb_set_peeked(struct sk_buff *skb)
+>>>>>>> 45de78b... linux: 3.18.31
 {
 	struct sk_buff *nskb;
 
 	if (skb->peeked)
+<<<<<<< HEAD
+		return 0;
+=======
 		return skb;
+>>>>>>> 45de78b... linux: 3.18.31
 
 	/* We have to unshare an skb before modifying it. */
 	if (!skb_shared(skb))
@@ -144,7 +151,11 @@ static struct sk_buff *skb_set_peeked(struct sk_buff *skb)
 
 	nskb = skb_clone(skb, GFP_ATOMIC);
 	if (!nskb)
-		return ERR_PTR(-ENOMEM);;
+<<<<<<< HEAD
+		return -ENOMEM;
+=======
+		return ERR_PTR(-ENOMEM);
+>>>>>>> 45de78b... linux: 3.18.31
 
 	skb->prev->next = nskb;
 	skb->next->prev = nskb;
@@ -157,11 +168,13 @@ static struct sk_buff *skb_set_peeked(struct sk_buff *skb)
 done:
 	skb->peeked = 1;
 
+<<<<<<< HEAD
+	return 0;
+=======
 	return skb;
+>>>>>>> 45de78b... linux: 3.18.31
 }
 
-=======
->>>>>>> e9ea78d... linux: 3.18.25
 /**
  *	__skb_recv_datagram - Receive a datagram skbuff
  *	@sk: socket
@@ -196,7 +209,9 @@ done:
 struct sk_buff *__skb_recv_datagram(struct sock *sk, unsigned int flags,
 				    int *peeked, int *off, int *err)
 {
+	struct sk_buff_head *queue = &sk->sk_receive_queue;
 	struct sk_buff *skb, *last;
+	unsigned long cpu_flags;
 	long timeo;
 	/*
 	 * Caller is allowed not to check sk->sk_err before skb_recv_datagram()
@@ -215,8 +230,6 @@ struct sk_buff *__skb_recv_datagram(struct sock *sk, unsigned int flags,
 		 * Look at current nfs client by the way...
 		 * However, this function was correct in any case. 8)
 		 */
-		unsigned long cpu_flags;
-		struct sk_buff_head *queue = &sk->sk_receive_queue;
 		int _off = *off;
 
 		last = (struct sk_buff *)queue;
@@ -230,16 +243,17 @@ struct sk_buff *__skb_recv_datagram(struct sock *sk, unsigned int flags,
 					_off -= skb->len;
 					continue;
 				}
-<<<<<<< HEAD
 
+<<<<<<< HEAD
+				error = skb_set_peeked(skb);
+				if (error)
+=======
 				skb = skb_set_peeked(skb);
 				error = PTR_ERR(skb);
 				if (IS_ERR(skb))
+>>>>>>> 45de78b... linux: 3.18.31
 					goto unlock_err;
 
-=======
-				skb->peeked = 1;
->>>>>>> e9ea78d... linux: 3.18.25
 				atomic_inc(&skb->users);
 			} else
 				__skb_unlink(skb, queue);
@@ -263,6 +277,8 @@ struct sk_buff *__skb_recv_datagram(struct sock *sk, unsigned int flags,
 
 	return NULL;
 
+unlock_err:
+	spin_unlock_irqrestore(&queue->lock, cpu_flags);
 no_packet:
 	*err = error;
 	return NULL;
@@ -785,7 +801,8 @@ __sum16 __skb_checksum_complete_head(struct sk_buff *skb, int len)
 		    !skb->csum_complete_sw)
 			netdev_rx_csum_fault(skb->dev);
 	}
-	skb->csum_valid = !sum;
+	if (!skb_shared(skb))
+		skb->csum_valid = !sum;
 	return sum;
 }
 EXPORT_SYMBOL(__skb_checksum_complete_head);
@@ -805,11 +822,13 @@ __sum16 __skb_checksum_complete(struct sk_buff *skb)
 			netdev_rx_csum_fault(skb->dev);
 	}
 
-	/* Save full packet checksum */
-	skb->csum = csum;
-	skb->ip_summed = CHECKSUM_COMPLETE;
-	skb->csum_complete_sw = 1;
-	skb->csum_valid = !sum;
+	if (!skb_shared(skb)) {
+		/* Save full packet checksum */
+		skb->csum = csum;
+		skb->ip_summed = CHECKSUM_COMPLETE;
+		skb->csum_complete_sw = 1;
+		skb->csum_valid = !sum;
+	}
 
 	return sum;
 }

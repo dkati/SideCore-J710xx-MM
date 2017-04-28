@@ -59,15 +59,15 @@ OPTION_2()
 
 	#Build Ramdisk
 	mv arch/arm64/boot/Image arch/arm64/boot/boot.img-zImage
-	rm -f build/ramdisk/J710x/split_img/boot.img-zImage
-	mv -f arch/arm64/boot/boot.img-zImage build/ramdisk/J710x/split_img/boot.img-zImage
+	#rm -f build/ramdisk/J710x/split_img/boot.img-zImage
+	mv -f arch/arm64/boot/boot.img-zImage build/ramdisk/J710x/split_img/boot.img-kernel
 	cd build/ramdisk/J710x
-	./repackimg.sh
-	echo SEANDROIDENFORCE >> image-new.img
+	./repack_img
+	echo SEANDROIDENFORCE >> boot.img
 	
 
 	cd $THISDIR
-	mv -f build/ramdisk/J710x/image-new.img build/zip/J710x/boot.img
+	mv -f build/ramdisk/J710x/boot.img build/zip/J710x/boot.img
 	cd build/zip/J710x
 
 	FILENAME=SideCore-$VERSION_NUMBER-`date +"[%H-%M]-[%d-%m]-MM-EUR"`.zip

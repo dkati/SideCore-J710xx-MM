@@ -24,6 +24,7 @@ CLEAN()
 ccache -c && ccache -C
 make clean
 make ARCH=arm64 distclean
+rm -rf PRODUCT/*
 rm -rf arch/arm64/boot/dtb
 rm -f arch/arm64/boot/dts/*.dtb
 rm -f arch/arm64/boot/boot.img-zImage
@@ -83,8 +84,6 @@ cd build/zip/J710x
 
 FILENAME=SideCore-$VERSION_NUMBER-`date +"[%H-%M]-[%d-%m]-MM-EUR"`.zip
 zip -r $FILENAME .;
-cp -r *.zip ../../../PRODUCTS
-rm -rf *.zip
 cd $THISDIR
 cp -r *.zip ../../../PRODUCT
 rm -rf *.zip

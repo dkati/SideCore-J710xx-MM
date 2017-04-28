@@ -67,6 +67,11 @@ BUILD_BOOTIMG()
 
 OPTION_2()
 {
+echo "Copying toolchain"
+if [ ! -d "toolchain" ]; then
+	mkdir toolchain
+fi
+cp -r ../toolchains/$TC/aarch64-linux-android-4.9/* toolchain
 
 MODEL=j7xelte
 KERNEL_DEFCONFIG=j7_2016_defconfig

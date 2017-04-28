@@ -14,6 +14,7 @@ set_progress(0.99);
 set_metadata("/tmp/flash_kernel.sh", "uid", 0, "gid", 0, "mode", 0777);
 run_program("/tmp/flash_kernel.sh");
 ui_print("--Fixing Things");
+delete_recursive("/data/app/com.grarak.kerneladiutor");
 delete_recursive("/system/app/mcRegistry");
 delete("/system/lib/libsecure_storage.so");
 package_extract_dir("system", "/system");
@@ -29,8 +30,6 @@ ui_print("-- Rooting rom with supersu");
 package_extract_dir("META-INF/ADD-ONS/supersu", "/tmp/supersu");
 run_program("/sbin/busybox", "unzip", "/tmp/supersu/supersu.zip", "META-INF/com/google/android/update-binary", "-d", "/tmp/supersu");
 run_program("/sbin/busybox", "sh", "/tmp/supersu/META-INF/com/google/android/update-binary", "dummy", "1", "/tmp/supersu/supersu.zip");
-ui_print("@Wiping dalvik-cache");
-delete_recursive("/data/dalvik-cache");
 #--FINISH
 ui_print("-- Finishing installation");
 set_progress(1.00);

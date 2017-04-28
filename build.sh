@@ -37,6 +37,9 @@ rm -f build/$ZIPLOC/J710x/*.zip
 rm -f build/$ZIPLOC/J710x/*.img
 rm -rf toolchain/*
 echo "Copying toolchain"
+if [ ! -f "toolchain" ]; then
+	mkdir toolchain
+fi
 cp -r ../toolchains/$TC/aarch64-linux-android-4.9/* toolchain
 }
 

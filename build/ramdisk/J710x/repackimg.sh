@@ -151,7 +151,7 @@ echo " ";
 echo "Using format: $imgtype";
 echo " ";
 case $imgtype in
-  AOSP) bin/$arch/mkbootimg --kernel "$kernel" --ramdisk "$ramdisk" $second --cmdline "$cmdline" --board "$board" --base $base --pagesize $pagesize --kernel_offset $kerneloff --ramdisk_offset $ramdiskoff --second_offset "$secondoff" --tags_offset "$tagsoff" --os_version "$osver" --os_patch_level "$oslvl" $dtb -o image-new.img;;
+  AOSP) bin/$arch/mkbootimg --kernel "$kernel" --ramdisk "$ramdisk" $second --cmdline "$cmdline" --board "$board" --base $base --pagesize $pagesize --kernel_offset $kerneloff --ramdisk_offset $ramdiskoff  --tags_offset "$tagsoff"$dtb -o image-new.img;;
   CHROMEOS) bin/$arch/mkbootimg --kernel "$kernel" --ramdisk "$ramdisk" $second --cmdline "$cmdline" --board "$board" --base $base --pagesize $pagesize --kernel_offset $kerneloff --ramdisk_offset $ramdiskoff --second_offset "$secondoff" --tags_offset "$tagsoff" --os_version "$osver" --os_patch_level "$oslvl" $dtb -o unsigned-new.img;;
 esac;
 if [ ! $? -eq "0" ]; then

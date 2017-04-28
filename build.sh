@@ -102,8 +102,10 @@ esac
 
 FUNC_BUILD_BOOTIMG()
 {
-	FUNC_CLEAN
 	(
+	rm -f $RDIR/build/build.log
+	rm -f $RDIR/build/build-G610F.log
+	rm -f $RDIR/build/build-J710x.log
 	FUNC_BUILD_ZIMAGE
 	FUNC_BUILD_RAMDISK
 	) 2>&1	 | tee -a $RDIR/build/build.log

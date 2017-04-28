@@ -83,11 +83,12 @@ cd build/zip/J710x
 
 FILENAME=SideCore-$VERSION_NUMBER-`date +"[%H-%M]-[%d-%m]-MM-EUR"`.zip
 zip -r $FILENAME .;
+cp -r *.zip ../../../PRODUCTS
+rm -rf *.zip
+cd $THISDIR
+cp -r *.zip ../../../PRODUCT
+rm -rf *.zip
 
-echo ""
-echo "Total compiling time is $ELAPSED_TIME seconds"
-echo ""
-echo "You can now find your .zip file in the build folder"
 echo ""
 exit
 }
@@ -100,10 +101,7 @@ CLEAN
 exit
 }
 
-
-# -------------
-# PROGRAM START
-# -------------
+echo ""
 echo "SideCore kernel for J170xx"
 echo "1) Clean Workspace"
 echo "2) Build kernel"

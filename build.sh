@@ -84,8 +84,6 @@ cd build/zip/J710x
 FILENAME=SideCore-$VERSION_NUMBER-`date +"[%H-%M]-[%d-%m]-MM-EUR"`.zip
 zip -r $FILENAME .;
 
-END_TIME=`date +%s`
-let "ELAPSED_TIME=$END_TIME-$START_TIME"
 echo ""
 echo "Total compiling time is $ELAPSED_TIME seconds"
 echo ""

@@ -19,81 +19,72 @@ KERNELNAME=SideCore
 
 CLEAN()
 {
-ccache -c && ccache -C
-make clean
-make ARCH=arm64 distclean
-rm -rf PRODUCT/*
-rm -rf arch/arm64/boot/dtb
-rm -f arch/arm64/boot/dts/*.dtb
-rm -f arch/arm64/boot/boot.img-zImage
-rm -f build/boot.img
-rm -f build/*.zip
-rm -f build/ramdisk/J710x/ramdisk-new.cpio.gz
-rm -f build/ramdisk/J710x/split_img/boot.img-zImage
-rm -f build/zip/J710x/*.zip
-rm -f build/zip/J710x/*.img
-rm -rf toolchain/*
-echo "Copying toolchain"
-if [ ! -d "toolchain" ]; then
+	ccache -c && ccache -C
+	make clean
+	make ARCH=arm64 distclean
+	rm -rf PRODUCT/*
+	rm -rf arch/arm64/boot/dtb
+	rm -f arch/arm64/boot/dts/*.dtb
+	rm -f arch/arm64/boot/boot.img-zImage
+	rm -f build/boot.img
+	rm -f build/*.zip
+	rm -f build/ramdisk/J710x/ramdisk-new.cpio.gz
+	rm -f build/ramdisk/J710x/split_img/boot.img-zImage
+	rm -f build/zip/J710x/*.zip
+	rm -f build/zip/J710x/*.img
+	rm -rf toolchain/*
+	echo "Copying toolchain"
+	
+	if [ ! -d "toolchain" ]; then
 	mkdir toolchain
-fi
-cp -r ../toolchains/$TC/aarch64-linux-android-4.9/* toolchain
+	fi
+	
+	cp -r ../toolchains/$TC/aarch64-linux-android-4.9/* toolchain
 }
 
-BUILD_ZIMAGE()
-{
-export CROSS_COMPILE=$TOOLCHAIN_DIR
-export ARCH=arm64
-make j7_2016_defconfig
-make -j4
-}
-
-BUILD_RAMDISK()
-{
-mv arch/arm64/boot/Image arch/arm64/boot/boot.img-zImage
-rm -f build/ramdisk/J710x/split_img/boot.img-zImage
-mv -f arch/arm64/boot/boot.img-zImage build/ramdisk/J710x/split_img/boot.img-zImage
-cd build/ramdisk/J710x
-./repackimg.sh
-echo SEANDROIDENFORCE >> image-new.img
-}
-
-BUILD_BOOTIMG()
-{
-	BUILD_ZIMAGE
-	BUILD_RAMDISK
-}
 
 OPTION_2()
 {
-echo "Copying toolchain"
-if [ ! -d "toolchain" ]; then
-	mkdir toolchain
-fi
-cp -r ../toolchains/$TC/aarch64-linux-android-4.9/* toolchain
+	echo "Copying toolchain"
+	if [ ! -d "toolchain" ]; then
+		mkdir toolchain
+	fi
+	cp -r ../toolchains/$TC/aarch64-linux-android-4.9/* toolchain
 
-KERNEL_DEFCONFIG=j7_2016_defconfig
-BUILD_BOOTIMG
+	#Build pure zImage
+	export CROSS_COMPILE=$TOOLCHAIN_DIR
+	export ARCH=arm64
+	make j7_2016_defconfig
+	make -j4
 
-cd $THISDIR
-mv -f build/ramdisk/J710x/image-new.img build/zip/J710x/boot.img
-cd build/zip/J710x
+	#Build Ramdisk
+	mv arch/arm64/boot/Image arch/arm64/boot/boot.img-zImage
+	rm -f build/ramdisk/J710x/split_img/boot.img-zImage
+	mv -f arch/arm64/boot/boot.img-zImage build/ramdisk/J710x/split_img/boot.img-zImage
+	cd build/ramdisk/J710x
+	./repackimg.sh
+	echo SEANDROIDENFORCE >> image-new.img
+	
 
-FILENAME=SideCore-$VERSION_NUMBER-`date +"[%H-%M]-[%d-%m]-MM-EUR"`.zip
-zip -r $FILENAME .;
-cp -r *.zip ../../../PRODUCT
-rm -rf *.zip
+	cd $THISDIR
+	mv -f build/ramdisk/J710x/image-new.img build/zip/J710x/boot.img
+	cd build/zip/J710x
 
-echo ""
-exit
+	FILENAME=SideCore-$VERSION_NUMBER-`date +"[%H-%M]-[%d-%m]-MM-EUR"`.zip
+	zip -r $FILENAME .;
+	cp -r *.zip ../../../PRODUCT
+	rm -rf *.zip
+
+	echo ""
+	exit
 }
 
 
 OPTION_1()
 {
-echo "Cleaning..."
-CLEAN
-exit
+	echo "Cleaning..."
+	CLEAN
+	exit
 }
 
 echo ""

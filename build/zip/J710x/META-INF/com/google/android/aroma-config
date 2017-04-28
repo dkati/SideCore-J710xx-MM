@@ -1,0 +1,63 @@
+ini_set("force_colorspace", "rgba");
+##
+# Show Simple Splash
+#
+splash(
+#  #-- Duration 2000ms / 2 seconds
+    2000,
+  
+  #-- <AROMA Resource Dir>/logo.png
+    "logo"
+);
+
+################################################################################################################################################################# 
+ini_set("rom_name",             "LAZER KERNEL");
+ini_set("rom_version",          "1");
+ini_set("rom_author",           "@Siddhant");
+ini_set("rom_device",           "SM-G610(F-M-Y)");
+ini_set("rom_date",             "WED 28/04/2017");
+#################################################################################################################################################################
+fontresload( "0", "ttf/DroidSans.ttf;ttf/DroidSansArabic.ttf;ttf/DroidSansFallback.ttf;", "12" );
+theme("touchwiz");
+#################################################################################################################################################################
+viewbox(
+"WELCOME",
+"INSTALL <b>"+
+ini_get("rom_name")+
+"</b> FOR <b>"+ini_get("rom_device")+"</b>.\n\n"+
+"INFORMATION OF THE KERNEL:\n\n"+
+"NAME \t: <b><#selectbg_g>"+ini_get("rom_name")+"</#></b>\n"+
+"VERSION\t: <b><#selectbg_g>"+ini_get("rom_version")+"</#></b>\n"+
+"BUILD DATE\t: <b><#selectbg_g>"+ini_get("rom_date")+"</#></b>\n"+
+"DEVELPER\t: <b><#selectbg_g>"+ini_get("rom_author")+"</#></b>\n"+
+"<b><#f00>ONLY FOR SM-G610(F-M)</#></b>\n\n\n"+	
+"PRESS NEXT TO CONTINUE",
+"@welcome"
+);
+#################################################################################################################################################################
+setvar("retstatus",
+install(
+"",
+"<b>"+ini_get("rom_name")+"</b> INSTALLATION\n"+
+"PLEASE WAIT WHILE INSTALLATION FINISHING INSTALLING <b>"+ini_get("rom_name")+
+"</b> THIS PROCESS WILL TAKE SOME TIME",	
+"@install",	
+"THE INSTALLATION FINISHED FROM INSTALLING <b>"+ini_get("rom_name")+
+"</b> PRESS NEXT TO CONTINUE"
+)
+);
+#################################################################################################################################################################
+checkviewbox(
+"",
+"<#selectbg_g><b>INSTALLTION COMPLETED</b></#>\n\n"+
+"<b>"+ini_get("rom_name")+"</b> NOW INSTALLED IN YOUR PHONE",
+"@welcome",
+"REBOOT DEVICE",
+"1",
+"reboot_it"
+);
+if
+getvar("reboot_it")=="1"
+then
+reboot("onfinish");
+endif;

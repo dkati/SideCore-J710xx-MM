@@ -2,13 +2,12 @@
 # kernel build script by Tkkg1994 v0.4 (optimized from apq8084 kernel source)
 # Modified by side / XDA Developers
 
-# ---------
-# VARIABLES
-# ---------
 VERSION_NUMBER=$(<build/version)
-ARCH=arm64
-STOCK_TOOLCHAIN=stock_tc/aarch64-linux-android-4.9/bin/aarch64-linux-android-
-BUILD_JOB_NUMBER=`grep processor /proc/cpuinfo|wc -l`
+
+TOOLCHAIN_DIR=toolchain/aarch64-linux-android-4.9/bin/aarch64-linux-android-
+TC=stock 
+#stock/linaro/uber
+
 OUTDIR=arch/$ARCH/boot
 DTSDIR=arch/$ARCH/boot/dts
 DTBDIR=$OUTDIR/dtb
@@ -20,40 +19,36 @@ KERNELNAME=SideCore
 ZIPLOC=zip
 RAMDISKLOC=ramdisk
 
-# ---------
-# FUNCTIONS
-# ---------
-FUNC_CLEAN()
+CLEAN()
 {
+ccache -c && ccache -C
 make clean
 make ARCH=arm64 distclean
 rm -f build/build.log
 rm -f build/build-J710x.log
 rm -rf arch/arm64/boot/dtb
-rm -f arch/$ARCH/boot/dts/*.dtb
-rm -f arch/$ARCH/boot/boot.img-zImage
+rm -f arch/arm64/boot/dts/*.dtb
+rm -f arch/arm64/boot/boot.img-zImage
 rm -f build/boot.img
 rm -f build/*.zip
 rm -f build/$RAMDISKLOC/J710x/ramdisk-new.cpio.gz
 rm -f build/$RAMDISKLOC/J710x/split_img/boot.img-zImage
 rm -f build/$ZIPLOC/J710x/*.zip
-rm -f /build/$ZIPLOC/J710x/*.img
+rm -f build/$ZIPLOC/J710x/*.img
+rm -rf toolchain/*
+echo "Copying toolchain"
+cp -r ../toolchains/$TC/aarch64-linux-android-4.9/* toolchain
 }
 
-FUNC_BUILD_ZIMAGE()
+BUILD_ZIMAGE()
 {
-echo ""
-echo "build common config="$KERNEL_DEFCONFIG ""
-echo "build variant config="$MODEL ""
-make -j$BUILD_JOB_NUMBER ARCH=$ARCH \
-	CROSS_COMPILE=$BUILD_CROSS_COMPILE \
-	$KERNEL_DEFCONFIG || exit -1
-make -j$BUILD_JOB_NUMBER ARCH=$ARCH \
-	CROSS_COMPILE=$BUILD_CROSS_COMPILE || exit -1
-echo ""
+export CROSS_COMPILE=$TOOLCHAIN_DIR
+export ARCH=arm64
+make exynos7870-j7xelte_eur_open_defconfig
+make -j4
 }
 
-FUNC_BUILD_RAMDISK()
+BUILD_RAMDISK()
 {
 if [ ! -f "build/ramdisk/J710x/ramdisk/config" ]; then
 	mkdir build/ramdisk/J710x/ramdisk/config
@@ -69,17 +64,17 @@ echo SEANDROIDENFORCE >> image-new.img
 	
 }
 
-FUNC_BUILD_BOOTIMG()
+BUILD_BOOTIMG()
 {
 	(
 	rm -f build/build.log
 	rm -f build/build-J710x.log
-	FUNC_BUILD_ZIMAGE
-	FUNC_BUILD_RAMDISK
+	BUILD_ZIMAGE
+	BUILD_RAMDISK
 	) 2>&1	 | tee -a build/build.log
 }
 
-FUNC_BUILD_ZIP()
+BUILD_ZIP()
 {
 echo ""
 echo "Building Zip File"
@@ -98,14 +93,14 @@ mv -f $ZIP_FILE_TARGET build/$ZIP_NAME
 }
 
 
-OPTION_5()
+OPTION_2()
 {
 rm -f build/build.log
 MODEL=j7xelte
 KERNEL_DEFCONFIG=j7_2016_defconfig
 START_TIME=`date +%s`
 	(
-	FUNC_BUILD_BOOTIMG
+	BUILD_BOOTIMG
 	) 2>&1	 | tee -a build/build.log
 mv -f build/ramdisk/J710x/image-new.img build/$ZIPLOC/J710x/boot.img
 mv -f build/build.log build/build-J710x.log
@@ -113,7 +108,7 @@ ZIP_DATE=`date +%Y%m%d`
 ZIP_FILE_DIR=build/$ZIPLOC/J710x
 ZIP_NAME=$KERNELNAME.J710x.v$VERSION_NUMBER.$ZIP_DATE.zip
 ZIP_FILE_TARGET=$ZIP_FILE_DIR/$ZIP_NAME
-FUNC_BUILD_ZIP
+BUILD_ZIP
 END_TIME=`date +%s`
 let "ELAPSED_TIME=$END_TIME-$START_TIME"
 echo ""
@@ -126,10 +121,10 @@ exit
 }
 
 
-OPTION_0()
+OPTION_1()
 {
-echo "Cleaning Workspace"
-FUNC_CLEAN
+echo "Cleaning..."
+CLEAN
 exit
 }
 
@@ -138,20 +133,17 @@ exit
 # PROGRAM START
 # -------------
 rm -rf ./build/build.log
-clear
-echo ""
-echo " 1) Clean Workspace"
-echo ""
-echo " 2) Build kernel"
-echo ""
-echo " 3) Exit"
+echo "SideCore kernel for J170xx"
+echo "1) Clean Workspace"
+echo "2) Build kernel"
+echo "3) Exit"
 echo ""
 read -p "Please select an option " prompt
 echo ""
 if [ $prompt == "1" ]; then
-	OPTION_0
+	OPTION_1
 elif [ $prompt == "2" ]; then
-	OPTION_5
+	OPTION_2
 elif [ $prompt == "3" ]; then
 	exit
 fi

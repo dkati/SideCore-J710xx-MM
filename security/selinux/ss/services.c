@@ -1819,9 +1819,6 @@ static int clone_sid(u32 sid,
 
 static inline int convert_context_handle_invalid_context(struct context *context)
 {
-	char *s;
-	u32 len;
-
 #ifdef CONFIG_SECURITY_SELINUX_ALWAYS_ENFORCE
 	return -EINVAL;
 #else

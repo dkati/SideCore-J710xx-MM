@@ -30,6 +30,8 @@ CLEAN()
 	rm -f build/*.zip
 	rm -f build/ramdisk/J710x/ramdisk-new.cpio.gz
 	rm -f build/ramdisk/J710x/split_img/boot.img-zImage
+	rm -f build/ramdisk/J710x/split_img/boot.img-Image
+	rm -f build/ramdisk/J710x/split_img/boot.img
 	rm -f build/zip/J710x/*.zip
 	rm -f build/zip/J710x/*.img
 	rm -rf toolchain/*

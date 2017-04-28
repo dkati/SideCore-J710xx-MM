@@ -22,7 +22,7 @@ CLEAN()
 	ccache -c && ccache -C
 	make clean
 	make ARCH=arm64 distclean
-	rm -rf PRODUCT/*
+	rm -rf PRODUCT/Side*
 	rm -rf arch/arm64/boot/dtb
 	rm -f arch/arm64/boot/dts/*.dtb
 	rm -f arch/arm64/boot/boot.img-zImage

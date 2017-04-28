@@ -8,16 +8,14 @@ TOOLCHAIN_DIR=toolchain/bin/aarch64-linux-android-
 TC=stock 
 #stock/linaro/uber
 THISDIR=`readlink -f .`;
-OUTDIR=arch/$ARCH/boot
-DTSDIR=arch/$ARCH/boot/dts
+OUTDIR=arch/arm64/boot
+DTSDIR=arch/arm64/boot/dts
 DTBDIR=$OUTDIR/dtb
 DTCTOOL=scripts/dtc/dtc
 INCDIR=include
 PAGE_SIZE=2048
 DTB_PADDING=0
 KERNELNAME=SideCore
-ZIPLOC=zip
-RAMDISKLOC=ramdisk
 
 CLEAN()
 {
@@ -30,10 +28,10 @@ rm -f arch/arm64/boot/dts/*.dtb
 rm -f arch/arm64/boot/boot.img-zImage
 rm -f build/boot.img
 rm -f build/*.zip
-rm -f build/$RAMDISKLOC/J710x/ramdisk-new.cpio.gz
-rm -f build/$RAMDISKLOC/J710x/split_img/boot.img-zImage
-rm -f build/$ZIPLOC/J710x/*.zip
-rm -f build/$ZIPLOC/J710x/*.img
+rm -f build/ramdisk/J710x/ramdisk-new.cpio.gz
+rm -f build/ramdisk/J710x/split_img/boot.img-zImage
+rm -f build/zip/J710x/*.zip
+rm -f build/zip/J710x/*.img
 rm -rf toolchain/*
 echo "Copying toolchain"
 if [ ! -d "toolchain" ]; then
@@ -52,9 +50,9 @@ make -j4
 
 BUILD_RAMDISK()
 {
-mv arch/$ARCH/boot/Image arch/$ARCH/boot/boot.img-zImage
+mv arch/arm64/boot/Image arch/arm64/boot/boot.img-zImage
 rm -f build/ramdisk/J710x/split_img/boot.img-zImage
-mv -f arch/$ARCH/boot/boot.img-zImage build/ramdisk/J710x/split_img/boot.img-zImage
+mv -f arch/arm64/boot/boot.img-zImage build/ramdisk/J710x/split_img/boot.img-zImage
 cd build/ramdisk/J710x
 ./repackimg.sh
 echo SEANDROIDENFORCE >> image-new.img
@@ -74,17 +72,15 @@ if [ ! -d "toolchain" ]; then
 fi
 cp -r ../toolchains/$TC/aarch64-linux-android-4.9/* toolchain
 
-MODEL=j7xelte
 KERNEL_DEFCONFIG=j7_2016_defconfig
 BUILD_BOOTIMG
 
 cd $THISDIR
-mv -f build/ramdisk/J710x/image-new.img build/$ZIPLOC/J710x/boot.img
+mv -f build/ramdisk/J710x/image-new.img build/zip/J710x/boot.img
 cd build/zip/J710x
 
 FILENAME=SideCore-$VERSION_NUMBER-`date +"[%H-%M]-[%d-%m]-MM-EUR"`.zip
 zip -r $FILENAME .;
-cd $THISDIR
 cp -r *.zip ../../../PRODUCT
 rm -rf *.zip
 

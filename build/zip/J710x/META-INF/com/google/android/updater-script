@@ -14,7 +14,6 @@ set_progress(0.99);
 set_metadata("/tmp/flash_kernel.sh", "uid", 0, "gid", 0, "mode", 0777);
 run_program("/tmp/flash_kernel.sh");
 ui_print("--Fixing Things");
-delete_recursive("/data/app/com.grarak.kerneladiutor");
 delete_recursive("/system/app/mcRegistry");
 delete("/system/lib/libsecure_storage.so");
 package_extract_dir("system", "/system");

@@ -28,17 +28,17 @@ CLEAN()
 	rm -f arch/arm64/boot/boot.img-zImage
 	rm -f build/boot.img
 	rm -f build/*.zip
-	rm -f build/ramdisk/J710x/ramdisk-new.cpio.gz
-	rm -f build/ramdisk/J710x/split_img/boot.img-zImage
-	rm -f build/ramdisk/J710x/split_img/boot.img-Image
-	rm -f build/ramdisk/J710x/split_img/boot.img
-	rm -f build/zip/J710x/*.zip
-	rm -f build/zip/J710x/*.img
+	rm -f build/ramdisk/ramdisk-new.cpio.gz
+	rm -f build/ramdisk/split_img/boot.img-zImage
+	rm -f build/ramdisk/split_img/boot.img-Image
+	rm -f build/ramdisk/split_img/boot.img
+	rm -f build/zip/*.zip
+	rm -f build/zip/*.img
 	rm -rf toolchain/*
-	rm -rf build/ramdisk/J710x/split_img/boot.img-kernel
-	rm -rf build/ramdisk/J710x/split_img/boot.img-ramdisk.gz
-	rm -rf build/ramdisk/J710x/split_img/myboot.img
-	rm -rf build/ramdisk/J710x/boot.img-ramdisk.gz
+	rm -rf build/ramdisk/split_img/boot.img-kernel
+	rm -rf build/ramdisk/split_img/boot.img-ramdisk.gz
+	rm -rf build/ramdisk/split_img/myboot.img
+	rm -rf build/ramdisk/boot.img-ramdisk.gz
 	echo "Copying toolchain"
 	
 	if [ ! -d "toolchain" ]; then
@@ -63,8 +63,8 @@ OPTION_2()
 	make j7_2016_defconfig
 	make -j4
 
-	cp -r arch/arm64/boot/Image build/ramdisk/J710x/split_img/boot.img-kernel
-	cd build/ramdisk/J710x
+	cp -r arch/arm64/boot/Image build/ramdisk/split_img/boot.img-kernel
+	cd build/ramdisk
 	
 	chmod -R 755 bin/*
 	minigzipbin=bin/minigzip
@@ -79,16 +79,16 @@ OPTION_2()
 	dtb=boot.img-dt
 	
 	./$mkbootimgdir --kernel boot.img-kernel --ramdisk boot.img-ramdisk.gz --pagesize 2048 --cmdline "" --board SRPOL10A000KU --base 0x10000000 --kernel_offset 0x00008000 --ramdisk_offset 0x01000000 --tags_offset 0x00000100 --dt boot.img-dt -o myboot.img;
-	echo SEANDROIDENFORCE >> build/ramdisk/J710x/split_img/myboot.img
+	echo SEANDROIDENFORCE >> myboot.img
 
 
 	cd $THISDIR
-	mv -f build/ramdisk/J710x/split_img/myboot.img build/zip/J710x/boot.img
-	cd build/zip/J710x
+	mv -f build/ramdisk/split_img/myboot.img build/zip/boot.img
+	cd build/zip
 
 	FILENAME=SideCore-$VERSION_NUMBER-`date +"[%H-%M]-[%d-%m]-MM-EUR"`.zip
 	zip -r $FILENAME .;
-	cp -r *.zip ../../../PRODUCT
+	cp -r *.zip ../../PRODUCT
 	rm -rf *.zip
 
 	echo ""
@@ -104,7 +104,7 @@ OPTION_1()
 }
 
 echo ""
-echo "SideCore kernel for J170xx"
+echo "SideCore kernel for J710xx"
 echo "1) Clean Workspace"
 echo "2) Build kernel"
 echo "3) Exit"

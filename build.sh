@@ -35,6 +35,10 @@ CLEAN()
 	rm -f build/zip/J710x/*.zip
 	rm -f build/zip/J710x/*.img
 	rm -rf toolchain/*
+	rm -rf build/ramdisk/J710x/split_img/boot.img-kernel
+	rm -rf build/ramdisk/J710x/split_img/boot.img-ramdisk.gz
+	rm -rf build/ramdisk/J710x/split_img/myboot.img
+	rm -rf build/ramdisk/J170x/boot.img-ramdisk.gz
 	echo "Copying toolchain"
 	
 	if [ ! -d "toolchain" ]; then
@@ -59,17 +63,27 @@ OPTION_2()
 	make j7_2016_defconfig
 	make -j4
 
-	#Build Ramdisk
-	mv arch/arm64/boot/Image arch/arm64/boot/boot.img-zImage
-	#rm -f build/ramdisk/J710x/split_img/boot.img-zImage
-	mv -f arch/arm64/boot/boot.img-zImage build/ramdisk/J710x/split_img/boot.img-kernel
+	cp -r arch/arm64/boot/Image build/ramdisk/J710x/split_img/boot.img-kernel
 	cd build/ramdisk/J710x
-	./repack_img
-	echo SEANDROIDENFORCE >> boot.img
 	
+	chmod -R 755 bin/*
+	minigzipbin=bin/minigzip
+	mkbootfs=bin/mkbootfs;
+	mkbootimgdir=../bin/mkbootimg
+
+	./$mkbootfs ramdisk | ./$minigzipbin -c -9 > boot.img-ramdisk.gz;
+	cp -r *.gz split_img/boot.img-ramdisk.gz
+	
+	cd split_img
+	second=
+	dtb=boot.img-dt
+	
+	./$mkbootimgdir --kernel boot.img-kernel --ramdisk boot.img-ramdisk.gz --pagesize 2048 --cmdline "" --board SRPOL10A000KU --base 0x10000000 --kernel_offset 0x00008000 --ramdisk_offset 0x01000000 --tags_offset 0x00000100 --dt boot.img-dt -o myboot.img;
+	echo SEANDROIDENFORCE >> build/ramdisk/J710x/split_img/myboot.img
+
 
 	cd $THISDIR
-	mv -f build/ramdisk/J710x/boot.img build/zip/J710x/boot.img
+	mv -f build/ramdisk/J710x/split_img/myboot.img build/zip/J710x/boot.img
 	cd build/zip/J710x
 
 	FILENAME=SideCore-$VERSION_NUMBER-`date +"[%H-%M]-[%d-%m]-MM-EUR"`.zip

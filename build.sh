@@ -38,7 +38,7 @@ CLEAN()
 	rm -rf build/ramdisk/J710x/split_img/boot.img-kernel
 	rm -rf build/ramdisk/J710x/split_img/boot.img-ramdisk.gz
 	rm -rf build/ramdisk/J710x/split_img/myboot.img
-	rm -rf build/ramdisk/J170x/boot.img-ramdisk.gz
+	rm -rf build/ramdisk/J710x/boot.img-ramdisk.gz
 	echo "Copying toolchain"
 	
 	if [ ! -d "toolchain" ]; then

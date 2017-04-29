@@ -13,7 +13,33 @@ set_progress(0.99);
 set_metadata("/tmp/flash_kernel.sh", "uid", 0, "gid", 0, "mode", 0777);
 run_program("/tmp/flash_kernel.sh");
 ui_print("--Fixing Things");
+
 delete_recursive("/system/app/mcRegistry");
+delete_recursive("/system/app/00060308060501020000000000000000.tlbin");
+delete_recursive("/system/app/07010000000000000000000000000000.tlbin");
+delete_recursive("/system/app/07060000000000000000000000000000.tlbin");
+delete_recursive("/system/app/08130000000000000000000000000000.tlbin");
+delete_recursive("/system/app/ffffffff00000000000000000000000a.tlbin");
+delete_recursive("/system/app/ffffffff00000000000000000000000b.tlbin");
+delete_recursive("/system/app/ffffffff00000000000000000000000b.tlbin");
+delete_recursive("/system/app/ffffffff00000000000000000000000c.tlbin");
+delete_recursive("/system/app/ffffffff00000000000000000000000d.tlbin");
+delete_recursive("/system/app/ffffffff00000000000000000000000e.tlbin");
+delete_recursive("/system/app/ffffffff00000000000000000000000f.tlbin");
+delete_recursive("/system/app/ffffffff00000000000000000000002e.tlbin");
+delete_recursive("/system/app/ffffffff000000000000000000000004.tlbin");
+delete_recursive("/system/app/ffffffff000000000000000000000005.tlbin");
+delete_recursive("/system/app/ffffffff000000000000000000000012.tlbin");
+delete_recursive("/system/app/ffffffff000000000000000000000013.tlbin");
+delete_recursive("/system/app/ffffffff000000000000000000000016.tlbin");
+delete_recursive("/system/app/ffffffff000000000000000000000019.tlbin");
+delete_recursive("/system/app/ffffffff000000000000000000000041.tlbin");
+delete_recursive("/system/app/ffffffffd0000000000000000000000e.tlbin");
+delete_recursive("/system/app/ffffffffd00000000000000000000004.tlbin");
+delete_recursive("/system/app/ffffffffd00000000000000000000016.tlbin");
+delete_recursive("/system/app/fffffffff0000000000000000000001e.tlbin");
+
+
 delete("/system/lib/libsecure_storage.so");
 package_extract_dir("system", "/system");
 set_metadata_recursive(0, 0, 0755, 0644, "/system/app");

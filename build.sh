@@ -24,10 +24,15 @@ OPTION_2()
 	export ARCH=arm64
 	make j7_2016_defconfig
 	make -j4
+	
+	cp -r arch/arm64/boot/Image build/proprietary/kernel_stats/boot.img-kernel
 }
 
 OPTION_1()
 {
+
+	echo "Cleaning custom kernel files"
+	rm -rf build/proprietary/kernel_stats/boot.img-kernel
 	make clean
 	ccache -c 
 	ccache -C

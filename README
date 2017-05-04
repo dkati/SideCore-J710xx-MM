@@ -1,0 +1,31 @@
+# Lazer_Kernel J7 Prime
+
+A Custom Kernel for Samsung Galaxy J7 Prime / J7 2016.
+The main purpose of this Kernel is to have a stock-like Kernel that runs on G610x (J7 Prime) 
+variants and J710x (J7 2016) variants. 
+
+## How to use
+- Adjust the toolchain path in build.sh and Makefile to match the path on your system. 
+- Run build.sh and follow the prompts, alternatively you can use a command line:
+
+-	./build.sh 0  will perform Clean Workspace
+-	./build.sh 1  will perform Build LazerKernel boot.img for J7 Prime
+-	./build.sh 2  will perform Build LazerKernel boot.img for J7 2016
+-	./build.sh 3  will perform Build LazerKernel boot.img for J7 Prime + J7 2016
+-	./build.sh 4  will perform Build LazerKernel boot.img and .zip for J7 Prime
+-	./build.sh 5  will perform Build LazerKernel boot.img and .zip for J7 2016
+-	./build.sh 6  will perform Build LazerKernel boot.img and .zip for J7 Prime + J7 2016(Seperate)
+-	./build.sh 7  will perform Build LazerKernel boot.img and .zip for J7 Prime + J7 2016(All-In-One)
+
+  IE:   ./build.sh 1
+
+- When finished, the new .img or .zip file will be created in the build directory.
+- If Java is installed, the .zip files will be automatically signed.
+
+
+## Credit and Thanks to the following:
+- Samsung Open Source Release Center for the Source code (http://opensource.samsung.com)
+- The Linux Kernel Archive for the Linux Patches (https://www.kernel.org)
+- @djb77 for various commits from his source
+
+

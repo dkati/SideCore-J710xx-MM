@@ -25,6 +25,12 @@ OPTION_2()
 	make j7_2016_defconfig
 	make -j4
 	
+	PRODUCTIMAGE="arch/arm64/boot/Image"
+	if [ ! -f "$PRODUCTIMAGE" ]; then
+		echo "build failed" 
+		exit 0;
+	fi
+	
 	cp -r arch/arm64/boot/Image build/proprietary/kernel_stats/boot.img-kernel
 	cp -r build/proprietary/ramdisk  build/proprietary/carliv/boot-dummy
 	cp -r build/proprietary/kernel_stats/* build/proprietary/carliv/boot-dummy
@@ -68,7 +74,6 @@ read -p "Please select an option " prompt
 echo ""
 if [ $prompt == "1" ]; then
 	OPTION_1; 
-	clear;
 	rerun;
 elif [ $prompt == "2" ]; then
 	OPTION_2; 

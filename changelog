@@ -2,7 +2,7 @@ Changelog
 ----------------
 
 SideCore 1.0
-
+---------------------
 Initial release
 Based on exynos 7870 common sources
 Update to 3.18.36 kernel
@@ -11,8 +11,9 @@ Support f2fs and NTFS
 Flashing SuperSU while flashing kernel
 Flashing busybox while flashing kernel
 
-Governors:
-BARRY_ALLEN
+CPU Governors:
+
+ALUCARD
 BIOSHOCK
 BLU_ACTIVE
 CONSERVATIVE_X
@@ -22,7 +23,6 @@ DESPAIR
 ELECTRODEMAND
 HYPER
 IMPULSE
-INTELLIACTIVE
 INTELLIDEMAND
 INTELLIMM
 INTERACTIVE
@@ -31,16 +31,12 @@ INTERACTIVE_X
 IRONACTIVE
 LIONHEART
 NIGHTMARE
-ONDEMANDPLUS
 ONDEMAND_X
 PEGASUSQ
-SMARTASS2
-SMARTMAX
-SMARTMAX_EPS
-YANKACTIVE
 ZZMOOVE
 
 IO schedulers:
+
 VR IO
 TRIPNDROID
 SIO plus
@@ -50,3 +46,4 @@ FIFO
 BFQ
 ROW
  
+=================================================

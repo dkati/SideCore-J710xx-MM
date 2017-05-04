@@ -26,6 +26,11 @@ OPTION_2()
 	make -j4
 	
 	cp -r arch/arm64/boot/Image build/proprietary/kernel_stats/boot.img-kernel
+	cp -r build/proprietary/ramdisk  build/proprietary/carliv/boot-dummy
+	cp -r build/proprietary/kernel_stats/* build/proprietary/carliv/boot-dummy
+	. build/proprietary/carliv/carliv
+	
+	
 }
 
 OPTION_1()
@@ -35,6 +40,8 @@ OPTION_1()
 	rm -rf build/proprietary/kernel_stats/boot.img-kernel
 	rm -rf build/zip/boot.img
 	rm -rf build/zip/*.zip
+	rm -rf build/proprietary/carliv/output/*
+	rm -rf build/proprietary/carliv/boot-dummy/*
 	make clean
 	make ARCH=arm64 distclean
 	ccache -c 

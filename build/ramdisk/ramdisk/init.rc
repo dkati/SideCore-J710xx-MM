@@ -162,50 +162,18 @@ on init
     mount cgroup none /dev/cpuctl cpu
     chown system system /dev/cpuctl
     chown system system /dev/cpuctl/tasks
-    chown system system /dev/cpuctl/cpu.cfs_quota_us
     chmod 0666 /dev/cpuctl/tasks
-    chmod 0666 /dev/cpuctl/cpu.cfs_quota_us
     write /dev/cpuctl/cpu.shares 1024
     write /dev/cpuctl/cpu.rt_runtime_us 800000
     write /dev/cpuctl/cpu.rt_period_us 1000000
 
     mkdir /dev/cpuctl/bg_non_interactive
     chown system system /dev/cpuctl/bg_non_interactive/tasks
-    chown system system /dev/cpuctl/bg_non_interactive/cpu.cfs_quota_us
     chmod 0666 /dev/cpuctl/bg_non_interactive/tasks
-    chmod 0666 /dev/cpuctl/bg_non_interactive/cpu.cfs_quota_us
     # 5.0 %
     write /dev/cpuctl/bg_non_interactive/cpu.shares 52
     write /dev/cpuctl/bg_non_interactive/cpu.rt_runtime_us 700000
     write /dev/cpuctl/bg_non_interactive/cpu.rt_period_us 1000000
-
-    mkdir /dev/cpuctl/bg_cached
-    chown system system /dev/cpuctl/bg_cached/tasks
-    chown system system /dev/cpuctl/bg_cached/cpu.cfs_period_us
-    chown system system /dev/cpuctl/bg_cached/cpu.cfs_quota_us
-    chmod 0666 /dev/cpuctl/bg_cached/tasks
-    chmod 0666 /dev/cpuctl/bg_cached/cpu.cfs_period_us
-    chmod 0666 /dev/cpuctl/bg_cached/cpu.cfs_quota_us
-    # 5.0 %
-    write /dev/cpuctl/bg_cached/cpu.shares 52
-    write /dev/cpuctl/bg_cached/cpu.rt_runtime_us 700000
-    write /dev/cpuctl/bg_cached/cpu.rt_period_us 1000000
-    write /dev/cpuctl/bg_cached/cpu.cfs_period_us 20000
-    write /dev/cpuctl/bg_cached/cpu.cfs_quota_us 10000
-
-    mkdir /dev/cpuctl/bg_abnormal
-    chown system system /dev/cpuctl/bg_abnormal/tasks
-    chown system system /dev/cpuctl/bg_abnormal/cpu.cfs_period_us
-    chown system system /dev/cpuctl/bg_abnormal/cpu.cfs_quota_us
-    chmod 0666 /dev/cpuctl/bg_abnormal/tasks
-    chmod 0666 /dev/cpuctl/bg_abnormal/cpu.cfs_period_us
-    chmod 0666 /dev/cpuctl/bg_abnormal/cpu.cfs_quota_us
-    # 5.0 %
-    write /dev/cpuctl/bg_abnormal/cpu.shares 52
-    write /dev/cpuctl/bg_abnormal/cpu.rt_runtime_us 700000
-    write /dev/cpuctl/bg_abnormal/cpu.rt_period_us 1000000
-    write /dev/cpuctl/bg_abnormal/cpu.cfs_period_us 20000
-    write /dev/cpuctl/bg_abnormal/cpu.cfs_quota_us 10000
 
     # sets up initial cpusets for ActivityManager
     mkdir /dev/cpuset
@@ -213,68 +181,37 @@ on init
 
     # this ensures that the cpusets are present and usable, but the device's
     # init.rc must actually set the correct cpus
-    mkdir /dev/cpuset/real_fg
-    write /dev/cpuset/real_fg/cpus "0-7"
-    write /dev/cpuset/real_fg/mems 0
     mkdir /dev/cpuset/foreground
-    write /dev/cpuset/foreground/cpus "0-7"
+    write /dev/cpuset/foreground/cpus 0
     write /dev/cpuset/foreground/mems 0
+    mkdir /dev/cpuset/foreground/boost
+    write /dev/cpuset/foreground/boost/cpus 0
+    write /dev/cpuset/foreground/boost/mems 0
     mkdir /dev/cpuset/background
-    write /dev/cpuset/background/cpus "1-3"
+    write /dev/cpuset/background/cpus 0
     write /dev/cpuset/background/mems 0
-    mkdir /dev/cpuset/cached
-    write /dev/cpuset/cached/cpus "1-3"
-    write /dev/cpuset/cached/mems 0
-    mkdir /dev/cpuset/abnormal
-    write /dev/cpuset/abnormal/cpus "1-3"
-    write /dev/cpuset/abnormal/mems 0
-    mkdir /dev/cpuset/dex2oat
-    write /dev/cpuset/dex2oat/cpus "1-7"
-    write /dev/cpuset/dex2oat/mems 0
 
     # system-background is for system tasks that should only run on
     # little cores, not on bigs
     # to be used only by init, so don't change system-bg permissions
     mkdir /dev/cpuset/system-background
-    write /dev/cpuset/system-background/cpus "1-3"
+    write /dev/cpuset/system-background/cpus 0
     write /dev/cpuset/system-background/mems 0
 
     # change permissions for all cpusets we'll touch at runtime
     chown system system /dev/cpuset
-    chown system system /dev/cpuset/real_fg
     chown system system /dev/cpuset/foreground
+    chown system system /dev/cpuset/foreground/boost
     chown system system /dev/cpuset/background
-    chown system system /dev/cpuset/cached
-    chown system system /dev/cpuset/abnormal
-    chown system system /dev/cpuset/dex2oat
     chown system system /dev/cpuset/tasks
-    chown system system /dev/cpuset/real_fg/tasks
     chown system system /dev/cpuset/foreground/tasks
+    chown system system /dev/cpuset/foreground/boost/tasks
     chown system system /dev/cpuset/background/tasks
-    chown system system /dev/cpuset/cached/tasks
-    chown system system /dev/cpuset/abnormal/tasks
-    chown system system /dev/cpuset/dex2oat/tasks
-    chown system system /dev/cpuset/cpus
-    chown system system /dev/cpuset/real_fg/cpus
-    chown system system /dev/cpuset/foreground/cpus
-    chown system system /dev/cpuset/background/cpus
-    chown system system /dev/cpuset/cached/cpus
-    chown system system /dev/cpuset/abnormal/cpus
-    chown system system /dev/cpuset/dex2oat/cpus
-    chmod 0666 /dev/cpuset/real_fg/tasks
-    chmod 0666 /dev/cpuset/foreground/tasks
-    chmod 0666 /dev/cpuset/background/tasks
-    chmod 0666 /dev/cpuset/cached/tasks
-    chmod 0666 /dev/cpuset/abnormal/tasks
-    chmod 0666 /dev/cpuset/dex2oat/tasks
-    chmod 0666 /dev/cpuset/tasks
-    chmod 0666 /dev/cpuset/real_fg/cpus
-    chmod 0666 /dev/cpuset/foreground/cpus
-    chmod 0666 /dev/cpuset/background/cpus
-    chmod 0666 /dev/cpuset/cached/cpus
-    chmod 0666 /dev/cpuset/abnormal/cpus
-    chmod 0666 /dev/cpuset/dex2oat/cpus
-    chmod 0666 /dev/cpuset/cpus
+    chmod 0664 /dev/cpuset/foreground/tasks
+    chmod 0664 /dev/cpuset/foreground/boost/tasks
+    chmod 0664 /dev/cpuset/background/tasks
+    chmod 0664 /dev/cpuset/tasks
+
 
     # qtaguid will limit access to specific data based on group memberships.
     #   net_bw_acct grants impersonation of socket owners.
@@ -306,8 +243,6 @@ on init
 # reset_reason
     chown system system /proc/reset_reason
     chmod 0600 /proc/reset_reason
-    chown system system /proc/reset_reason_extra_info
-    chmod 0600 /proc/reset_reason_extra_info
 
 # Healthd can trigger a full boot from charger mode by signaling this
 # property when the power button is held.
@@ -386,15 +321,13 @@ on post-fs
     chown root log /proc/slabinfo
     chmod 0440 /proc/slabinfo
 
-    #change permissions on kmsg, summary & sysrq-trigger so bugreports can grab kthread stacks
+    #change permissions on kmsg & sysrq-trigger so bugreports can grab kthread stacks
     chown root system /proc/kmsg
     chmod 0440 /proc/kmsg
     chown root system /proc/sysrq-trigger
     chmod 0220 /proc/sysrq-trigger
     chown system log /proc/last_kmsg
     chmod 0440 /proc/last_kmsg
-    chown system log /proc/reset_summary
-    chmod 0440 /proc/reset_summary
     chown system log /proc/sec_log
 
     # make the selinux kernel policy world-readable
@@ -485,6 +418,10 @@ on post-fs-data
     
     # Professioanl Audio
     mkdir /data/misc/jack 0770 jack system
+
+    # Audio I2C node for TFA amp
+    chmod 0660 /dev/i2c-14
+    chown system system /dev/i2c-14
 
     # vpnclient
     mkdir /data/misc/vpnclientd 0770 system system
@@ -595,11 +532,6 @@ on post-fs-data
     mkdir /dev/socket/uibc 0777 media system
     chown media system /dev/socket/uibc
     chmod 0775 /dev/socket/uibc
-
-    # VaultKeeper socket
-    mkdir /dev/socket/vaultkeeper 0770 system system
-    chown system system /dev/socket/vaultkeeper
-    chmod 0770 /dev/socket/vaultkeeper
 
 # [ SEC_MM_DRM
     # DRM directory creation
@@ -873,7 +805,6 @@ on boot
 
     chown system system /sys/class/timed_output/vibrator/enable
     chown system system /sys/class/timed_output/vibrator/intensity		
-    chown system system /sys/class/timed_output/vibrator/multi_freq
     chown system system /sys/class/leds/keyboard-backlight/brightness
     chown system system /sys/class/leds/lcd-backlight/brightness
     chown system system /sys/class/leds/button-backlight/brightness
@@ -900,13 +831,9 @@ on boot
 
     chmod 0660 /sys/class/sec_touchkey/input/enabled
     chown system system /sys/class/sec/sec_touchkey/input/enabled
-    chown system radio /sys/class/sec/sec_touchkey/brightness
-    chown system radio /sys/class/sec/sec_touchkey/touchkey_light_version
-    chown system radio /sys/class/sec/sec_touchkey/touchkey_light_update
-    chown system radio /sys/class/sec/sec_touchkey/touchkey_light_id_compare
-    chown system radio /sys/class/sec/sec_touchkey/touchkey_light_table_write
+	chown system radio /sys/class/sec/sec_touchkey/brightness
 	
-    chmod 0660 /sys/class/sec/sec_epen/input/enabled
+	chmod 0660 /sys/class/sec/sec_epen/input/enabled
     chown system system /sys/class/sec/sec_epen/input/enabled
 
     # Define default initial receive window size in segments.
@@ -948,7 +875,6 @@ on boot
    chown system nfc /sys/class/power_supply/battery/wc_control
    chown system nfc /sys/class/power_supply/battery/wc_control_cnt
    chown system radio /sys/class/power_supply/battery/update
-   chown system radio /sys/class/power_supply/battery/batt_wdt_control
    chown system radio /sys/class/power_supply/battery/factory_mode_relieve
    chown system radio /sys/class/power_supply/battery/factory_mode_bypass
    chown media sdcard_rw /sys/class/power_supply/battery/store_mode
@@ -1044,17 +970,6 @@ on boot
    chmod 0664 /sys/class/power_supply/battery/batt_tune_temp_low_rec_normal
    chmod 0664 /sys/class/power_supply/battery/batt_tune_ui_term_cur_1st
    chmod 0664 /sys/class/power_supply/battery/batt_tune_ui_term_cur_2nd
-   chown system radio /sys/class/power_supply/battery/batt_filter_cfg
-   chown system radio /sys/class/power_supply/battery/batt_current_ua_avg
-   chown system radio /sys/class/power_supply/battery/batt_current_ua_now
-   chown system radio /sys/class/power_supply/battery/voltage_avg
-   chown system radio /sys/class/power_supply/battery/voltage_now
-   chown system radio /sys/class/power_supply/battery/mode
-   chmod 0664 /sys/class/power_supply/battery/mode
-   chown system radio /sys/class/power_supply/battery/wc_op_freq
-   chmod 0664 /sys/class/power_supply/battery/wc_op_freq
-   chown system radio /sys/class/power_supply/battery/wc_cmd_info
-   chmod 0664 /sys/class/power_supply/battery/wc_cmd_info
 
 # usb detect
     mkdir /dev/bus 0755 root root
@@ -1242,9 +1157,11 @@ service logd /system/bin/logd
     socket logdr seqpacket 0666 logd logd
     socket logdw dgram 0222 logd logd
     group root system
+     writepid /dev/cpuset/system-background/tasks
 
 service logd-reinit /system/bin/logd --reinit
     oneshot
+    writepid /dev/cpuset/system-background/tasks
     disabled
 
 service healthd /sbin/healthd
@@ -1289,22 +1206,64 @@ service edmaudit /system/bin/edmaudit
     
 ## WTL_EDM_END
 
+service kap_enable /sbin/knox_changer -e
+    class main
+    seclabel u:r:kapd:s0
+    disabled
+    oneshot
+
+service kap_disable /sbin/knox_changer -d
+    class main
+    seclabel u:r:kapd:s0
+    disabled
+    oneshot
+
 on property:security.knox_kap_mode=true
-    knox_changer ke
+    start kap_enable
 on property:security.knox_kap_mode=false
-    knox_changer kd
+    start kap_disable
+
+service afw_enable /sbin/knox_changer -f
+    class main
+    seclabel u:r:kapd:s0
+    disabled
+    oneshot
+
+service afw_disable /sbin/knox_changer -s
+    class main
+    seclabel u:r:kapd:s0
+    disabled
+    oneshot
 
 on property:security.knox_afw_mode=true
-    knox_changer ae
+    start afw_enable
 on property:security.knox_afw_mode=false
-    knox_changer ad
+    start afw_disable
+
+service ucs_enable /sbin/knox_changer -u
+    class main
+    seclabel u:r:kapd:s0
+    disabled
+    oneshot
+
+service ucs_disable /sbin/knox_changer -v
+    class main
+    seclabel u:r:kapd:s0
+    disabled
+    oneshot
+
+service ucs_reset /sbin/knox_changer -w
+    class main
+    seclabel u:r:kapd:s0
+    disabled
+    oneshot
 
 on property:security.knox_ucs_mode=true
-    knox_changer ue
+    start ucs_enable
 on property:security.knox_ucs_mode=false
-    knox_changer ud
+    start ucs_disable
 on property:security.knox_ucs_mode=reset
-    knox_changer ur
+    start ucs_reset
 
 on property:ro.debuggable=1
     start console
@@ -1324,6 +1283,7 @@ service lmkd /system/bin/lmkd
     class core
     critical
     socket lmkd seqpacket 0660 system system
+    writepid /dev/cpuset/system-background/tasks
 
 service scs /system/bin/scs
     class main
@@ -1344,9 +1304,6 @@ service servicemanager /system/bin/servicemanager
     onrestart restart keystore
     onrestart restart sensorhubservice
     onrestart restart TvoutService_C
-
-service vaultkeeperd /system/bin/vaultkeeperd
-    class core
 
 service vold /system/bin/vold \
         --blkid_context=u:r:blkid:s0 --blkid_untrusted_context=u:r:blkid_untrusted:s0 \
@@ -1415,17 +1372,12 @@ service mobicore /system/bin/mcDriverDaemon -r /system/app/FFFFFFFF0000000000000
     user system
     group system
 
-#service trustonic-proxy /system/bin/trustonic_tee_proxy
-#    class core
-#    user system
-#    group system
-
 service surfaceflinger /system/bin/surfaceflinger
     class core
     user system
     group graphics drmrpc
     onrestart restart zygote
-    writepid /dev/cpuset/foreground/tasks
+    writepid /dev/cpuset/system-background/tasks
     onrestart restart loc_launcher
     
 service SIDESYNC_service /system/bin/ss_conn_daemon
@@ -1452,18 +1404,18 @@ service drm /system/bin/drmserver
 service media /system/bin/mediaserver
     class main
     user media
-    group system audio camera inet net_bt net_bt_admin net_raw net_bw_acct drmrpc sdcard_r shell mediadrm media_rw lgt_gid radio log
+    group system audio camera inet net_bt net_bt_admin net_raw net_bw_acct drmrpc sdcard_r shell mediadrm media_rw lgt_gid radio
     ioprio rt 4
 
 service apaservice /system/bin/apaservice
     class main
     user jack
-    group inet sdcard_rw sdcard_r media_rw shell
+    group system inet sdcard_rw sdcard_r media_rw shell
 
 service jackservice /system/bin/jackservice
     class main
     user jack
-    group audio inet shell
+    group system audio inet shell
     
 # One shot invocation to deal with encrypted volume.
 service defaultcrypto /system/bin/vdc --wait cryptfs mountdefaultencrypted
@@ -1580,6 +1532,7 @@ service perfprofd /system/xbin/perfprofd
     class late_start
     user root
     oneshot
+    writepid /dev/cpuset/system-background/tasks
 
 on property:persist.logd.logpersistd=logcatd
     # all exec/services are called with umask(077), so no gain beyond 0700
@@ -1726,49 +1679,3 @@ on property:service.vpnclientd.enable=0
 # Reactivation lock
 	service reactived /system/bin/reactived
 	class late_start
-
-# SA, APS, System SW, SAMSUNG
-on property:ro.product_ship=false
-	chown root system /proc/sluggishinfo
-	chmod 0440 /proc/sluggishinfo
-	mkdir /data/log/sluggishinfo 0775 system system
-	restorecon /data/log/sluggishinfo
-
-on property:init.svc.bootanim=stopped
-# set property for touchkey light voltage table
-    chown system system /efs/FactoryApp/tkey_light_version
-    chown system system /efs/FactoryApp/tkey_light_crc
-    chown system system /efs/FactoryApp/tkey_light0
-    chown system system /efs/FactoryApp/tkey_light1
-    chown system system /efs/FactoryApp/tkey_light2
-    chown system system /efs/FactoryApp/tkey_light3
-    chown system system /efs/FactoryApp/tkey_light4
-    chown system system /efs/FactoryApp/tkey_light5
-    chown system system /efs/FactoryApp/tkey_light6
-    chown system system /efs/FactoryApp/tkey_light7
-    chown system system /efs/FactoryApp/tkey_light8
-    chown system system /efs/FactoryApp/tkey_light9
-    chown system system /efs/FactoryApp/tkey_light10
-    chown system system /efs/FactoryApp/tkey_light11
-    chown system system /efs/FactoryApp/tkey_light12
-    chown system system /efs/FactoryApp/tkey_light13
-    chown system system /efs/FactoryApp/tkey_light14
-    chown system system /efs/FactoryApp/tkey_light15
-
-# IO stats Deamon
-service iod /system/bin/iod
-    user system
-    group shell
-    class main
-    oneshot
-    disabled
-
-on property:sys.boot_completed=1
-    start iod
-
- 
-# start init.d support
-service kernel-init /sbin/kernel-init.sh
-	class main
-	user root
-	oneshot

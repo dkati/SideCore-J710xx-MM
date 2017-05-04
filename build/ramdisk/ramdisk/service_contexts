@@ -176,62 +176,11 @@ atchannel                                 u:object_r:radio_service:s0
 fm                                        u:object_r:mediaserver_service:s0
 sprdsimphonebook                          u:object_r:radio_service:s0
 sprd_phone                                u:object_r:radio_service:s0
-#security                                  u:object_r:system_server_service:s0
-#board_score                               u:object_r:system_server_service:s0
-media.VideoCallEngineService              u:object_r:mediaserver_service:s0
-iglobalconfig                             u:object_r:radio_service:s0
-phasechecknative                          u:object_r:phasecheck_service:s0
-irit                                      u:object_r:radio_service:s0
-#line 1 "vendor/samsung/common/sepolicy/BSP/bsp_mediatek/service_contexts"
-# ==============================================
-# MTK Policy Rule
-# ==============================================
-
-# System Server Services
-search_engine       u:object_r:search_service:s0
-audioprofile        u:object_r:audio_service:s0
-mobile              u:object_r:mtk_mobile_service:s0
-mtk-perfservice     u:object_r:mtk_perf_service:s0
-recovery            u:object_r:mtk_recovery_service:s0
-mtkhdmi             u:object_r:mtk_hdmi_service:s0
-msgmonitorservice   u:object_r:mtk_msg_monitor_service:s0
-anrmanager          u:object_r:mtk_anrmanager_service:s0
-# SEC Merge; sensorhubservice    u:object_r:sensorservice_service:s0
-SensorHubService    u:object_r:sensorservice_service:s0
-epdg_service        u:object_r:mtk_epgd_service:s0
-rns                 u:object_r:mtk_rns_service:s0
-
-# Other Services
-NvRAMAgent          u:object_r:nvram_agent_service:s0
-phoneEx             u:object_r:radio_service:s0
-DmAgent             u:object_r:dm_agent_binder_service:s0
-hotknot_service 	u:object_r:mtk_hotknot_service:s0
-vie_command  		u:object_r:system_app_service:s0
-terservice          u:object_r:terservice_service:s0
-GoogleOtaBinder      u:object_r:ota_agent_service:s0
-memory_dumper       u:object_r:mediaserver_service:s0
-AAL                 u:object_r:aal_service:s0
-PQ                 u:object_r:pq_service:s0
-iphonesubinfotedongle      u:object_r:radio_service:s0
-isubtedongle               u:object_r:radio_service:s0
-simphonebooktedongle       u:object_r:radio_service:s0
-ismstedongle               u:object_r:radio_service:s0
-tedongleservice            u:object_r:radio_service:s0
-GbaService                 u:object_r:radio_service:s0
-GuiExtService       u:object_r:guiext-server_service:s0
-mtk.codecservice	u:object_r:mtk_codec_service_service:s0
-PPLAgent                   u:object_r:ppl_agent_service:s0
-media.mmsdk         u:object_r:mediaserver_service:s0
-program_binary      u:object_r:program_binary_service:s0
-media.VTS           u:object_r:vtservice_service:s0
-GpuAppSpectatorService  u:object_r:gas_srv_service:s0
-hotknotnativeservice    u:object_r:hotknot_native_service:s0
-wfo                 u:object_r:radio_service:s0
+security                                  u:object_r:system_service:s0
+board_score                               u:object_r:system_service:s0
 #line 1 "vendor/samsung/common/sepolicy/service_contexts"
 ############ aosp and sec_common #############
 ABTPersistenceService                       u:object_r:abt_persistence_service:s0
-AODManagerService                           u:object_r:aod_manager_service:s0
-com.samsung.android.camera.iris.IIrisDaemon u:object_r:irisd_service:s0
 com.samsung.android.jam.IAPAClient          u:object_r:apaservice_service:s0
 com.samsung.android.jam.IAPAClientAccordion u:object_r:apaservice_service:s0
 com.samsung.android.jam.IAPAClientBase      u:object_r:apaservice_service:s0
@@ -253,9 +202,6 @@ bio.BAuthService                            u:object_r:bauthserver_service:s0
 TvoutService_C                              u:object_r:bintvoutservice_service:s0
 com.samsung.android.jam.IAndroidShm         u:object_r:jackservice_service:s0
 com.samsung.android.jam.IJackService        u:object_r:jackservice_service:s0
-# SEA_site_M_OS#113, tigerservice
-com.samsung.srk.tigerkeystoreprovider.ITigerService               u:object_r:tigerservice_service:s0
-media.mediacapture                          u:object_r:mediaserver_service:s0
 media.transcoder                            u:object_r:mediaserver_service:s0
 com.broadcom.nfc.Factory                    u:object_r:nfc_service:s0
 handset                                     u:object_r:nfc_service:s0
@@ -263,7 +209,6 @@ nfccontroller                               u:object_r:nfc_service:s0
 offhostservice                              u:object_r:nfc_service:s0
 secontroller                                u:object_r:nfc_service:s0
 OTP                                         u:object_r:otp_server_service:s0
-com.samsung.android.pass.IPassService       u:object_r:pass_service:s0
 hermesservice                               u:object_r:platform_app_service:s0
 penableservice                              u:object_r:platform_app_service:s0
 SAGearPolicyManaagerService                 u:object_r:platform_app_service:s0
@@ -272,8 +217,6 @@ radio.simphonebook                          u:object_r:radio_service:s0
 phoneext                                    u:object_r:radio_service:s0
 phoneext2                                   u:object_r:radio_service:s0
 samsung.smartfaceservice                    u:object_r:smartfaceservice_service:s0
-# No.38 Change iris service name(iris to samsung.iris) and level(system_service to app_service)
-samsung.iris                                u:object_r:iris_service:s0
 sensorhubservice                            u:object_r:sensorhubservice_service:s0
 vendor.enea.Buffer_GL                       u:object_r:surfaceflinger_service:s0
 batterymanager                              u:object_r:system_app_service:s0
@@ -314,7 +257,6 @@ CocktailBarService                          u:object_r:system_service:s0
 CustomFrequencyManagerService               u:object_r:system_service:s0
 DeviceRootKeyService                        u:object_r:system_service:s0
 device_info                                 u:object_r:system_service:s0
-desktop                                     u:object_r:system_service:s0
 DigitalPen                                  u:object_r:system_service:s0
 DirEncryptService                           u:object_r:system_service:s0
 download                                    u:object_r:system_service:s0
@@ -333,7 +275,6 @@ gamemanager                                 u:object_r:system_service:s0
 harmony_eas_service                         u:object_r:system_service:s0
 healthcover                                 u:object_r:system_service:s0
 iccc                                        u:object_r:system_service:s0
-moodlight                                   u:object_r:system_service:s0
 injection                                   u:object_r:system_service:s0
 keyguard                                    u:object_r:system_service:s0
 kiesusb                                     u:object_r:system_service:s0
@@ -370,8 +311,6 @@ sec.clipboard8                              u:object_r:system_service:s0
 sec.clipboard9                              u:object_r:system_service:s0
 sec_analytics                               u:object_r:system_service:s0
 sec_location                                u:object_r:system_service:s0
-# SEA_site#61
-semclipboard                                u:object_r:system_service:s0
 sensor                                      u:object_r:system_service:s0
 sensorhub                                   u:object_r:system_service:s0
 scontext                                    u:object_r:system_service:s0
@@ -379,7 +318,6 @@ spengestureservice                          u:object_r:system_service:s0
 storage                                     u:object_r:system_service:s0
 SecExternalDisplayService                   u:object_r:system_service:s0
 tima                                        u:object_r:system_service:s0
-pkm                                         u:object_r:system_service:s0
 transcloud                                  u:object_r:system_service:s0
 tw_toolbox                                  u:object_r:system_service:s0
 voip                                        u:object_r:system_service:s0
@@ -390,7 +328,6 @@ CCM                                         u:object_r:tlc_server_service:s0
 DCM                                         u:object_r:tlc_server_service:s0
 ESECOMM                                     u:object_r:tlc_server_service:s0
 TUI                                         u:object_r:tlc_server_service:s0
-VaultKeeper                                 u:object_r:VaultKeeper_service:s0
 WlanDutService                              u:object_r:wlandutservice_service:s0
 writingbuddymanagerservice                  u:object_r:writingbuddymanager_service:s0
 writingbuddymanagerserviceknox              u:object_r:writingbuddymanager_service:s0
@@ -507,8 +444,6 @@ wifioffload                                 u:object_r:system_service:s0
 com.skt.tbase.INativeService                u:object_r:tbased_service:s0
 ############ carrier_att
 com.smartcom.root.APNWidgetRootService      u:object_r:system_app_service:s0
-############ carrier_vzw
-vzwimsapiservice                            u:object_r:system_app_service:s0
 ############ carrier_jpn
 # OSV models
 DeviceManager3LM                            u:object_r:system_service:s0
@@ -538,8 +473,4 @@ felica                                      u:object_r:nfc_service:s0
 
 #IPM service
 sam.sruk.ipm                              u:object_r:ipm_service:s0
-
-## Service name "MSCS" change to "DisplaySolution"
-DisplaySolution                             u:object_r:displaysolution_service:s0
-
 

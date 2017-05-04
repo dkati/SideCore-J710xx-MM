@@ -39,7 +39,10 @@ OPTION_1()
 	cp -r ../toolchains/$TC/aarch64-linux-android-4.9/* toolchain
 	
 }
-
+rerun()
+{
+	bash build.sh;
+}
 echo ""
 echo "SideCore kernel for J710xx"
 echo "1) Clean Workspace"
@@ -49,9 +52,11 @@ echo ""
 read -p "Please select an option " prompt
 echo ""
 if [ $prompt == "1" ]; then
-	OPTION_1
+	OPTION_1; 
+	clear;
+	rerun;
 elif [ $prompt == "2" ]; then
-	OPTION_2
+	OPTION_2; 
 elif [ $prompt == "3" ]; then
 	exit
 fi

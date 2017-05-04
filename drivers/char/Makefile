@@ -5,7 +5,7 @@
 obj-y				+= mem.o random.o
 obj-$(CONFIG_TTY_PRINTK)	+= ttyprintk.o
 obj-y				+= misc.o
-+obj-$(CONFIG_FRANDOM)		+= frandom.o
+obj-$(CONFIG_FRANDOM)		+= frandom.o
 obj-$(CONFIG_ATARI_DSP56K)	+= dsp56k.o
 obj-$(CONFIG_VIRTIO_CONSOLE)	+= virtio_console.o
 obj-$(CONFIG_RAW_DRIVER)	+= raw.o
@@ -64,7 +64,6 @@ js-rtc-y = rtc.o
 
 obj-$(CONFIG_TILE_SROM)		+= tile-srom.o
 obj-$(CONFIG_XILLYBUS)		+= xillybus/
-obj-$(CONFIG_EXYNOS_MCOMP)	+= exynos-mcomp/
 
 obj-$(CONFIG_KNOX_KAP)		+= knox_kap.o
 obj-$(CONFIG_MST_LDO)		+= mst_ctrl.o

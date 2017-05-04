@@ -13,7 +13,7 @@ KERNELNAME=SideCore
 
 OPTION_2()
 {
-	echo "Copying toolchain"
+	echo "Copying toolchain..."
 	if [ ! -d "toolchain" ]; then
 		mkdir toolchain
 	fi
@@ -31,9 +31,12 @@ OPTION_2()
 OPTION_1()
 {
 
-	echo "Cleaning custom kernel files"
+	echo "Cleaning custom kernel files..."
 	rm -rf build/proprietary/kernel_stats/boot.img-kernel
+	rm -rf build/zip/boot.img
+	rm -rf build/zip/*.zip
 	make clean
+	make ARCH=arm64 distclean
 	ccache -c 
 	ccache -C
 	rm -rf toolchain/*

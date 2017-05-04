@@ -7,6 +7,7 @@ Initial release
 Based on exynos 7870 common sources
 Update to 3.18.36 kernel
 Enforced SELinux
+Support f2fs and NTFS
 
 Governors:
 BARRY_ALLEN
@@ -37,3 +38,13 @@ SMARTMAX_EPS
 YANKACTIVE
 ZZMOOVE
 
+IO schedulers:
+VR IO
+TRIPNDROID
+SIO plus
+SIO
+FIOPS
+FIFO
+BFQ
+ROW
+ 

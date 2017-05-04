@@ -8,7 +8,8 @@ Based on exynos 7870 common sources
 Update to 3.18.36 kernel
 Enforced SELinux
 Support f2fs and NTFS
-Flash SuperSU while flashing kernel
+Flashing SuperSU while flashing kernel
+Flashing busybox while flashing kernel
 
 Governors:
 BARRY_ALLEN

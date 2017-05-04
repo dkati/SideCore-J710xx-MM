@@ -25,6 +25,7 @@ ro.config.rkp=false
 ro.config.kap=false
 ro.sec.fle.encryption=false
 ro.securestorage.support=false
+wlan.wfd.hdcp = disable
 
 #
 # BOOTIMAGE_BUILD_PROPERTIES

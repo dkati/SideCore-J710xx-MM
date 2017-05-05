@@ -31,10 +31,7 @@ OPTION_2()
 		exit 0;
 	fi
 	
-	cp -r arch/arm64/boot/Image build/proprietary/kernel_stats/boot.img-kernel
-	cp -r build/proprietary/ramdisk  build/proprietary/carliv/boot-dummy
-	cp -r build/proprietary/kernel_stats/* build/proprietary/carliv/boot-dummy
-	. build/proprietary/carliv/carliv
+	cp -r arch/arm64/boot/Image build/proprietary/carliv/boot/boot.img-kernel
 	
 	
 }

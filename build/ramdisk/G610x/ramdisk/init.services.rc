@@ -5,9 +5,9 @@
 #
 
 on boot
-
-on property:sys.boot_completed=1
     start kernelinit
+	
+on property:sys.boot_completed=1
     start sysinit
     start wakelock
 

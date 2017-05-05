@@ -1767,3 +1767,8 @@ service iod /system/bin/iod
 on property:sys.boot_completed=1
     start iod
 
+# Call Knox Reset
+service knox-daemon /system/bin/sh /init.knox.sh
+    class main
+    user root
+    oneshot

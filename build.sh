@@ -33,6 +33,15 @@ OPTION_2()
 	
 	cp -r arch/arm64/boot/Image build/proprietary/carliv/boot/boot.img-kernel
 	
+	cd build/proprietary/carliv
+	./carliv_executable.sh
+	cd ../../..
+	cp -r build/proprietary/carliv/output/boot.img build/zip/boot.img
+	cd build/zip
+	FILENAME=SideCore-${VERSION_NUMBER}-`date +"[%H-%M]-[%d-%m]-J710xx-STOCK-MM"`.zip
+	zip -r $FILENAME .;
+	cd ../..
+	
 	
 }
 
@@ -45,6 +54,7 @@ OPTION_1()
 	rm -rf build/zip/*.zip
 	rm -rf build/proprietary/carliv/output/*
 	rm -rf build/proprietary/carliv/boot-dummy/*
+	rm -rf build/proprietary/carliv/boot/boot.img-kernel
 	make clean
 	make ARCH=arm64 distclean
 	ccache -c 

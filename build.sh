@@ -266,6 +266,11 @@ echo ""
 
 OPTION_5()
 {
+if [ ! -d "toolchain" ]; then
+	mkdir toolchain
+	fi
+	
+	cp -r ../toolchains/$TC/aarch64-linux-android-4.9/* toolchain
 rm -f $RDIR/build/build.log
 MODEL=j7xelte
 KERNEL_DEFCONFIG=Lazer_Kernel_j7xelte_defconfig

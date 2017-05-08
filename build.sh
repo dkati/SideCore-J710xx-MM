@@ -8,7 +8,9 @@
 BUILD_SCRIPT=1.2
 VERSION_NUMBER=$(<build/version)
 ARCH=arm64
-BUILD_CROSS_COMPILE=../toolchains/stock/aarch64-linux-android-4.9/bin
+BUILD_CROSS_COMPILE=toolchain/bin/aarch64-linux-android-
+TC=stock 
+#stock/linaro/uber
 BUILD_JOB_NUMBER=`grep processor /proc/cpuinfo|wc -l`
 RDIR=$(pwd)
 OUTDIR=$RDIR/arch/$ARCH/boot
@@ -27,6 +29,9 @@ RAMDISKLOC=ramdisk
 # ---------
 FUNC_CLEAN()
 {
+
+
+	
 make clean
 make ARCH=arm64 distclean
 rm -f $RDIR/build/build.log
@@ -67,6 +72,13 @@ echo "" > $RDIR/build/$RAMDISKLOC/J710x/ramdisk/proc/.placeholder
 echo "" > $RDIR/build/$RAMDISKLOC/J710x/ramdisk/storage/.placeholder
 echo "" > $RDIR/build/$RAMDISKLOC/J710x/ramdisk/sys/.placeholder
 echo "" > $RDIR/build/$RAMDISKLOC/J710x/ramdisk/system/.placeholder
+
+echo "Copying toolchain..."
+if [ ! -d "toolchain" ]; then
+	mkdir toolchain
+fi
+cp -r ../toolchains/$TC/aarch64-linux-android-4.9/* toolchain
+
 }
 
 FUNC_DELETE_PLACEHOLDERS()

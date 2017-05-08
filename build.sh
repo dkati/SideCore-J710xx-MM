@@ -8,7 +8,7 @@
 BUILD_SCRIPT=1.2
 VERSION_NUMBER=$(<build/version)
 ARCH=arm64
-BUILD_CROSS_COMPILE=/usr/local/share/aarch64-linux-android-4.9/bin/aarch64-linux-android-
+BUILD_CROSS_COMPILE=../toolchains/stock/aarch64-linux-android-4.9/bin
 BUILD_JOB_NUMBER=`grep processor /proc/cpuinfo|wc -l`
 RDIR=$(pwd)
 OUTDIR=$RDIR/arch/$ARCH/boot
@@ -17,8 +17,8 @@ DTCTOOL=$RDIR/scripts/dtc/dtc
 INCDIR=$RDIR/include
 PAGE_SIZE=2048
 DTB_PADDING=0
-KERNELNAME=Lazer_Kernel
-KERNELCONFIG=Lazer_Kernel
+KERNELNAME=SideCore
+KERNELCONFIG=SideCore
 ZIPLOC=zip
 RAMDISKLOC=ramdisk
 

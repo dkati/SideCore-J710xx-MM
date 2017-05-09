@@ -210,15 +210,6 @@ echo "Cleaning Workspace"
 FUNC_CLEAN
 }
 
-# ----------------------------------
-# CHECK COMMAND LINE FOR ANY ENTRIES
-# ----------------------------------
-if [ $1 == 0 ]; then
-	OPTION_0
-fi
-if [ $1 == 5 ]; then
-	OPTION_5
-fi
 
 
 # -------------

@@ -2,14 +2,14 @@
 # kernel build script by Tkkg1994 v0.4 (optimized from apq8084 kernel source)
 # Modified by side / XDA Developers
 
-VERSION_NUMBER=$(<build/version)
+VERSION_NUMBER=2.1
 
 TOOLCHAIN_DIR=toolchain/bin/aarch64-linux-android-
 TC=stock 
 #stock/linaro/uber
 THISDIR=`readlink -f .`;
 
-KERNELNAME=SideCore
+FILENAME=SideCore-${VERSION_NUMBER}-`date +"[%H-%M]-[%d-%m]-J710xx-STOCK-MM"`.zip
 
 OPTION_2()
 {
@@ -38,7 +38,7 @@ OPTION_2()
 	cd ../../..
 	cp -r build/proprietary/carliv/output/boot.img build/zip/boot.img
 	cd build/zip
-	FILENAME=SideCore-${VERSION_NUMBER}-`date +"[%H-%M]-[%d-%m]-J710xx-STOCK-MM"`.zip
+	
 	zip -r $FILENAME .;
 	cd ../..
 	

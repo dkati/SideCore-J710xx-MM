@@ -5,7 +5,7 @@
 VERSION_NUMBER=2.1
 
 TOOLCHAIN_DIR=toolchain/bin/aarch64-linux-android-
-TC=stock 
+TC=uber 
 #stock/linaro/uber
 THISDIR=`readlink -f .`;
 

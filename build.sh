@@ -5,7 +5,7 @@
 VERSION_NUMBER=2.1
 
 TOOLCHAIN_DIR=toolchain/bin/aarch64-linux-android-
-TC=uber 
+TC=uber
 #stock/linaro/uber
 THISDIR=`readlink -f .`;
 
@@ -17,6 +17,7 @@ OPTION_2()
 	if [ ! -d "toolchain" ]; then
 		mkdir toolchain
 	fi
+	rm -rf toolchain/*
 	cp -r ../toolchains/$TC/aarch64-linux-android-4.9/* toolchain
 	
 	#Build pure zImage

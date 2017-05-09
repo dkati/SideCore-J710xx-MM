@@ -38,33 +38,16 @@ ccache -C
 make clean
 make ARCH=arm64 distclean
 rm -f $RDIR/build/build.log
-rm -f $RDIR/build/build-G610x.log
 rm -f $RDIR/build/build-J710x.log
 rm -rf $RDIR/arch/arm64/boot/dtb
 rm -f $RDIR/arch/$ARCH/boot/dts/*.dtb
 rm -f $RDIR/arch/$ARCH/boot/boot.img-zImage
 rm -f $RDIR/build/boot.img
 rm -f $RDIR/build/*.zip
-rm -f $RDIR/build/$RAMDISKLOC/G610x/image-new.img
-rm -f $RDIR/build/$RAMDISKLOC/G610x/ramdisk-new.cpio.gz
-rm -f $RDIR/build/$RAMDISKLOC/G610x/split_img/boot.img-zImage
-rm -f $RDIR/build/$RAMDISKLOC/G610x/image-new.img
 rm -f $RDIR/build/$RAMDISKLOC/J710x/ramdisk-new.cpio.gz
 rm -f $RDIR/build/$RAMDISKLOC/J710x/split_img/boot.img-zImage
-rm -f $RDIR/build/$ZIPLOC/G610x/*.zip
-rm -f $RDIR/build/$ZIPLOC/G610x/*.img
 rm -f $RDIR/build/$ZIPLOC/J710x/*.zip
 rm -f $RDIR/build/$ZIPLOC/J710x/*.img
-echo "" > $RDIR/build/$RAMDISKLOC/G610x/ramdisk/acct/.placeholder
-echo "" > $RDIR/build/$RAMDISKLOC/G610x/ramdisk/cache/.placeholder
-echo "" > $RDIR/build/$RAMDISKLOC/G610x/ramdisk/data/.placeholder
-echo "" > $RDIR/build/$RAMDISKLOC/G610x/ramdisk/dev/.placeholder
-echo "" > $RDIR/build/$RAMDISKLOC/G610x/ramdisk/lib/modules/.placeholder
-echo "" > $RDIR/build/$RAMDISKLOC/G610x/ramdisk/mnt/.placeholder
-echo "" > $RDIR/build/$RAMDISKLOC/G610x/ramdisk/proc/.placeholder
-echo "" > $RDIR/build/$RAMDISKLOC/G610x/ramdisk/storage/.placeholder
-echo "" > $RDIR/build/$RAMDISKLOC/G610x/ramdisk/sys/.placeholder
-echo "" > $RDIR/build/$RAMDISKLOC/G610x/ramdisk/system/.placeholder
 echo "" > $RDIR/build/$RAMDISKLOC/J710x/ramdisk/acct/.placeholder
 echo "" > $RDIR/build/$RAMDISKLOC/J710x/ramdisk/cache/.placeholder
 echo "" > $RDIR/build/$RAMDISKLOC/J710x/ramdisk/data/.placeholder

@@ -31,9 +31,6 @@ $BB mount -o remount,rw /system;
 $BB mount -o remount,rw /data;
 $BB mount -o remount,rw /;
 
-# Knox set to 0 on working system
-/sbin/resetprop -n ro.boot.warranty_bit "0"
-/sbin/resetprop -n ro.warranty_bit "0"
 
 #-------------------------
 # MTWEAKS

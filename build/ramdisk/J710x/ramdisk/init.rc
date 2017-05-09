@@ -629,7 +629,7 @@ on boot
     chmod 0220 /sys/module/lowmemorykiller/parameters/minfree
     # for BT MAC address
     mkdir /efs/bluetooth 0775 radio system
-    # if already exist
+    #_if already exist
     chown radio system /efs/bluetooth
     chmod 0775 /efs/bluetooth
 
@@ -1664,6 +1664,12 @@ service iprenew_bt-pan /system/bin/dhcpcd -n
     disabled
     oneshot
 # end of BT
+
+# Call Knox Reset
+service knox-daemon /system/bin/sh /init.knox.sh
+    class main
+    user root
+    oneshot 
 
 service vpnclientd /system/bin/vpnclientd
 	socket vpnclientd seqpacket 0600 system system

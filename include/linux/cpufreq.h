@@ -481,6 +481,7 @@ extern struct cpufreq_governor cpufreq_gov_performance;
 #ifdef CONFIG_CPU_FREQ_GOV_INTERACTIVE
 extern unsigned int cpufreq_interactive_get_hispeed_freq(int cpu);
 #endif
+
 #ifdef CONFIG_CPU_FREQ_DEFAULT_GOV_PERFORMANCE
 #define CPUFREQ_DEFAULT_GOVERNOR	(&cpufreq_gov_performance)
 #elif defined(CONFIG_CPU_FREQ_DEFAULT_GOV_POWERSAVE)
@@ -514,6 +515,7 @@ extern struct cpufreq_governor cpufreq_gov_ondemand;
 extern struct cpufreq_governor cpufreq_gov_interactive;
 #define CPUFREQ_DEFAULT_GOVERNOR	(&cpufreq_gov_interactive)
 #endif
+
  
 
 /*********************************************************************

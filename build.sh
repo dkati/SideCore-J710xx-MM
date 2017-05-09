@@ -7,10 +7,12 @@
 # ---------
 BUILD_SCRIPT=1.2
 VERSION_NUMBER=$(<build/version)
+
 ARCH=arm64
 BUILD_CROSS_COMPILE=toolchain/bin/aarch64-linux-android-
 TC=stock 
 #stock/linaro/uber
+
 BUILD_JOB_NUMBER=`grep processor /proc/cpuinfo|wc -l`
 RDIR=$(pwd)
 OUTDIR=$RDIR/arch/$ARCH/boot
@@ -31,7 +33,8 @@ FUNC_CLEAN()
 {
 
 
-	
+ccache -c
+ccache -C
 make clean
 make ARCH=arm64 distclean
 rm -f $RDIR/build/build.log
@@ -164,105 +167,9 @@ mv -f $ZIP_FILE_TARGET $RDIR/build/$ZIP_NAME
 cd $RDIR
 }
 
-OPTION_1()
-{
-rm -f $RDIR/build/build.log
-MODEL=on7xelte
-KERNEL_DEFCONFIG=Lazer_Kernel_on7xelte_defconfig
-START_TIME=`date +%s`
-	(
-	FUNC_BUILD_BOOTIMG
-	) 2>&1	 | tee -a $RDIR/build/build.log
-mv -f $RDIR/build/ramdisk/G610x/image-new.img $RDIR/build/boot.img
-mv -f $RDIR/build/build.log $RDIR/build/build-G610x.log
-END_TIME=`date +%s`
-let "ELAPSED_TIME=$END_TIME-$START_TIME"
-echo ""
-echo "Total compiling time is $ELAPSED_TIME seconds"
-echo ""
-echo "You can now find your boot.img in the build folder"
-echo "You can now find your build-G610x.log file in the build folder"
-echo ""
-}
 
-OPTION_2()
-{
-rm -f $RDIR/build/build.log
-MODEL=j7xelte
-KERNEL_DEFCONFIG=Lazer_Kernel_j7xelte_defconfig
-START_TIME=`date +%s`
-	(
-	FUNC_BUILD_BOOTIMG
-	) 2>&1	 | tee -a $RDIR/build/build.log
-mv -f $RDIR/build/ramdisk/J710x/image-new.img $RDIR/build/boot.img
-mv -f $RDIR/build/build.log $RDIR/build/build-J710x.log
-END_TIME=`date +%s`
-let "ELAPSED_TIME=$END_TIME-$START_TIME"
-echo ""
-echo "Total compiling time is $ELAPSED_TIME seconds"
-echo ""
-echo "You can now find your boot.img in the build folder"
-echo "You can now find your build-J710x.log file in the build folder"
-echo ""
-}
 
-OPTION_3()
-{
-rm -f $RDIR/build/build.log
-MODEL=on7xelte
-KERNEL_DEFCONFIG=Lazer_Kernel_on7xelte_defconfig
-START_TIME=`date +%s`
-	(
-	FUNC_BUILD_BOOTIMG
-	) 2>&1	 | tee -a $RDIR/build/build.log
-mv -f $RDIR/build/ramdisk/G610x/image-new.img $RDIR/build/G610x.img-save
-mv -f $RDIR/build/build.log $RDIR/build/build-G610x.log-save
-MODEL=j7xelte
-KERNEL_DEFCONFIG=Lazer_Kernel_j7xelte_defconfig
-	(
-	FUNC_BUILD_BOOTIMG
-	) 2>&1	 | tee -a $RDIR/build/build.log
-mv -f $RDIR/build/G610x.img-save $RDIR/build/G610x.img
-mv -f $RDIR/build/ramdisk/J710x/image-new.img $RDIR/build/J710x.img
-mv -f $RDIR/build/build-G610x.log-save $RDIR/build/build-G610x.log
-mv -f $RDIR/build/build.log $RDIR/build/build-J710x.log
-END_TIME=`date +%s`
-let "ELAPSED_TIME=$END_TIME-$START_TIME"
-echo ""
-echo "Total compiling time is $ELAPSED_TIME seconds"
-echo ""
-echo "You can now find your G610x.img in the build folder"
-echo "You can now find your J710x.img in the build folder"
-echo "You can now find your build-G610x.log file in the build folder"
-echo "You can now find your build-J710x.log file in the build folder"
-echo ""
-}
 
-OPTION_4()
-{
-rm -f $RDIR/build/build.log
-MODEL=on7xelte
-KERNEL_DEFCONFIG=Lazer_Kernel_on7xelte_defconfig
-START_TIME=`date +%s`
-	(
-	FUNC_BUILD_BOOTIMG
-	) 2>&1	 | tee -a $RDIR/build/build.log
-mv -f $RDIR/build/ramdisk/G610x/image-new.img $RDIR/build/$ZIPLOC/G610x/boot.img
-mv -f $RDIR/build/build.log $RDIR/build/build-G610x.log
-ZIP_DATE=`date +%Y%m%d`
-ZIP_FILE_DIR=$RDIR/build/$ZIPLOC/G610x
-ZIP_NAME=$KERNELNAME.G610x.v$VERSION_NUMBER.$ZIP_DATE.zip
-ZIP_FILE_TARGET=$ZIP_FILE_DIR/$ZIP_NAME
-FUNC_BUILD_ZIP
-END_TIME=`date +%s`
-let "ELAPSED_TIME=$END_TIME-$START_TIME"
-echo ""
-echo "Total compiling time is $ELAPSED_TIME seconds"
-echo ""
-echo "You can now find your .zip file in the build folder"
-echo "You can now find your build-G610x.log file in the build folder"
-echo ""
-}
 
 OPTION_5()
 {
@@ -295,81 +202,7 @@ echo "You can now find your build-J710x.log file in the build folder"
 echo ""
 }
 
-OPTION_6()
-{
-rm -f $RDIR/build/build.log
-MODEL=on7xelte
-KERNEL_DEFCONFIG=Lazer_Kernel_on7xelte_defconfig
-START_TIME=`date +%s`
-	(
-	FUNC_BUILD_BOOTIMG
-	) 2>&1	 | tee -a $RDIR/build/build.log
-mv -f $RDIR/build/ramdisk/G610x/image-new.img $RDIR/build/$ZIPLOC/G610x/boot.img-save
-mv -f $RDIR/build/build.log $RDIR/build/build-G610x.log-save
-MODEL=j7xelte
-KERNEL_DEFCONFIG=Lazer_Kernel_j7xelte_defconfig
-	(
-	FUNC_BUILD_BOOTIMG
-	) 2>&1	 | tee -a $RDIR/build/build.log
-mv -f $RDIR/build/$ZIPLOC/G610x/boot.img-save $RDIR/build/$ZIPLOC/G610x/boot.img
-mv -f $RDIR/build/ramdisk/J710x/image-new.img $RDIR/build/$ZIPLOC/J710x/boot.img
-mv -f $RDIR/build/build-G610x.log-save $RDIR/build/build-G610x.log
-mv -f $RDIR/build/build.log $RDIR/build/build-J710x.log
-ZIP_DATE=`date +%Y%m%d`
-ZIP_FILE_DIR=$RDIR/build/$ZIPLOC/G610x
-ZIP_NAME=$KERNELNAME.G610x.v$VERSION_NUMBER.$ZIP_DATE.zip
-ZIP_FILE_TARGET=$ZIP_FILE_DIR/$ZIP_NAME
-FUNC_BUILD_ZIP
-ZIP_FILE_DIR=$RDIR/build/$ZIPLOC/J710x
-ZIP_NAME=$KERNELNAME.J710x.v$VERSION_NUMBER.$ZIP_DATE.zip
-ZIP_FILE_TARGET=$ZIP_FILE_DIR/$ZIP_NAME
-FUNC_BUILD_ZIP
-END_TIME=`date +%s`
-let "ELAPSED_TIME=$END_TIME-$START_TIME"
-echo ""
-echo "Total compiling time is $ELAPSED_TIME seconds"
-echo ""
-echo "You can now find your .zip files in the build folder"
-echo "You can now find your build-G610x.log file in the build folder"
-echo "You can now find your build-J710x.log file in the build folder"
-echo ""
-}
 
-OPTION_7()
-{
-rm -f $RDIR/build/build.log
-MODEL=on7xelte
-KERNEL_DEFCONFIG=Lazer_Kernel_on7xelte_defconfig
-START_TIME=`date +%s`
-	(
-	FUNC_BUILD_BOOTIMG
-	) 2>&1	 | tee -a $RDIR/build/build.log
-mv -f $RDIR/build/ramdisk/G610x/image-new.img $RDIR/build/$ZIPLOC/g93xx/G610x.img-save
-mv -f $RDIR/build/build.log $RDIR/build/build-G610x.log-save
-MODEL=j7xelte
-KERNEL_DEFCONFIG=Lazer_Kernel_j7xelte_defconfig
-	(
-	FUNC_BUILD_BOOTIMG
-	) 2>&1	 | tee -a $RDIR/build/build.log
-mv -f $RDIR/build/$ZIPLOC/g93xx/G610x.img-save $RDIR/build/$ZIPLOC/g93xx/G610x.img
-mv -f $RDIR/build/ramdisk/J710x/image-new.img $RDIR/build/$ZIPLOC/g93xx/J710x.img
-mv -f $RDIR/build/build-G610x.log-save $RDIR/build/build-G610x.log
-mv -f $RDIR/build/build.log $RDIR/build/build-J710x.log
-ZIP_DATE=`date +%Y%m%d`
-ZIP_FILE_DIR=$RDIR/build/$ZIPLOC/g93xx
-ZIP_NAME=$KERNELNAME.G93xx.v$VERSION_NUMBER.$ZIP_DATE.zip
-ZIP_FILE_TARGET=$ZIP_FILE_DIR/$ZIP_NAME
-FUNC_BUILD_ZIP
-END_TIME=`date +%s`
-let "ELAPSED_TIME=$END_TIME-$START_TIME"
-echo ""
-echo "Total compiling time is $ELAPSED_TIME seconds"
-echo ""
-echo "You can now find your .zip file in the build folder"
-echo "You can now find your build-G610x.log file in the build folder"
-echo "You can now find your build-J710x.log file in the build folder"
-echo ""
-}
 
 OPTION_0()
 {
@@ -383,27 +216,10 @@ FUNC_CLEAN
 if [ $1 == 0 ]; then
 	OPTION_0
 fi
-if [ $1 == 1 ]; then
-	OPTION_1
-fi
-if [ $1 == 2 ]; then
-	OPTION_2
-fi
-if [ $1 == 3 ]; then
-	OPTION_3
-fi
-if [ $1 == 4 ]; then
-	OPTION_4
-fi
 if [ $1 == 5 ]; then
 	OPTION_5
 fi
-if [ $1 == 6 ]; then
-	OPTION_6
-fi
-if [ $1 == 7 ]; then
-	OPTION_7
-fi
+
 
 # -------------
 # PROGRAM START
@@ -414,13 +230,7 @@ echo "Lazer_Kernel J7 Build Script v$BUILD_SCRIPT -- Kernel Version: v$VERSION_N
 echo ""
 echo " 0) Clean Workspace"
 echo ""
-echo " 1) Build Lazer_Kernel boot.img for J7 Prime"
-echo " 2) Build Lazer_Kernel boot.img for J7 2016"
-echo " 3) Build Lazer_Kernel boot.img for J7 Prime + J7 2016"
-echo " 4) Build Lazer_Kernel boot.img and .zip for J7 Prime"
 echo " 5) Build Lazer_Kernel boot.img and .zip for J7 2016"
-echo " 6) Build Lazer_Kernel boot.img and .zip for J7 Prime + J7 2016 (Seperate)"
-echo " 7) Build Lazer_Kernel boot.img and .zip for J7 Prime + J7 2016 (All-In-One)"
 echo ""
 echo " 9) Exit"
 echo ""
@@ -433,50 +243,8 @@ if [ $prompt == "0" ]; then
 	echo ""
 	echo ""
 	./build.sh
-elif [ $prompt == "1" ]; then
-	OPTION_1
-	echo ""
-	echo ""
-	echo ""
-	echo ""
-	read -n 1 -s -p "Press any key to continue"
-elif [ $prompt == "2" ]; then
-	OPTION_2
-	echo ""
-	echo ""
-	echo ""
-	echo ""
-	read -n 1 -s -p "Press any key to continue"
-elif [ $prompt == "3" ]; then
-	OPTION_3
-	echo ""
-	echo ""
-	echo ""
-	echo ""
-	read -n 1 -s -p "Press any key to continue"
-elif [ $prompt == "4" ]; then
-	OPTION_4
-	echo ""
-	echo ""
-	echo ""
-	echo ""
-	read -n 1 -s -p "Press any key to continue"
 elif [ $prompt == "5" ]; then
 	OPTION_5
-	echo ""
-	echo ""
-	echo ""
-	echo ""
-	read -n 1 -s -p "Press any key to continue"
-elif [ $prompt == "6" ]; then
-	OPTION_6
-	echo ""
-	echo ""
-	echo ""
-	echo ""
-	read -n 1 -s -p "Press any key to continue"
-elif [ $prompt == "7" ]; then
-	OPTION_7
 	echo ""
 	echo ""
 	echo ""

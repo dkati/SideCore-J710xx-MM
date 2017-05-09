@@ -53,10 +53,6 @@ ui_print("Installing busybox...");
 run_program("/system/xbin/busybox", "--install", "-s", "/system/xbin");
 ui_print("");
 ui_print("");
-ui_print("Removing kernel adiutor")
-delete_recursive("/data/app/com.grarak.kerneladiutor-1");
-delete_recursive("/data/app/com.grarak.kerneladiutor");
-delete_recursive("/system/app/com.grarak.kerneladiutor-1");
 ui_print("Installing Device Control app");
 package_extract_dir("devicecontrol","/data/app/devicecontrol");
 set_metadata_recursive(0, 0, 0755, 0644, "/data/app/devicecontrol");

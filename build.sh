@@ -11,6 +11,11 @@ THISDIR=`readlink -f .`;
 
 FILENAME=SideCore-${VERSION_NUMBER}-`date +"[%H-%M]-[%d-%m]-J710xx-STOCK-MM"`.zip
 
+OPTION_3()
+{
+	echo "Cleaning products..."
+	rm -rf PRODUCT/*.zip
+}
 OPTION_2()
 {
 	echo "Copying toolchain..."
@@ -20,18 +25,22 @@ OPTION_2()
 	rm -rf toolchain/*
 	cp -r ../toolchains/$TC/aarch64-linux-android-4.9/* toolchain
 	
-	#Build pure zImage
-	export CROSS_COMPILE=$TOOLCHAIN_DIR
-	export ARCH=arm64
-	make j7_2016_defconfig
-	make -j4
-	
 	PRODUCTIMAGE="arch/arm64/boot/Image"
+	if [ ! -f "$PRODUCTIMAGE" ]; then
+		#Build raw zImage
+		export CROSS_COMPILE=$TOOLCHAIN_DIR
+		export ARCH=arm64
+		make j7_2016_defconfig
+		make -j4
+	fi
+	
+
 	if [ ! -f "$PRODUCTIMAGE" ]; then
 		echo "build failed" 
 		exit 0;
 	fi
 	
+	echo "Repacking..."
 	cp -r arch/arm64/boot/Image build/proprietary/carliv/boot/boot.img-kernel
 	
 	cd build/proprietary/carliv
@@ -42,6 +51,8 @@ OPTION_2()
 	
 	zip -r $FILENAME .;
 	cd ../..
+	mv  -v build/zip/*.zip PRODUCT/$FILENAME
+
 	
 	
 }
@@ -50,12 +61,11 @@ OPTION_1()
 {
 
 	echo "Cleaning custom kernel files..."
-	rm -rf build/proprietary/kernel_stats/boot.img-kernel
 	rm -rf build/zip/boot.img
 	rm -rf build/zip/*.zip
 	rm -rf build/proprietary/carliv/output/*
-	rm -rf build/proprietary/carliv/boot-dummy/*
 	rm -rf build/proprietary/carliv/boot/boot.img-kernel
+	rm -rf build/proprietary/carliv/boot/boot.img-ramdisk.gz
 	make clean
 	make ARCH=arm64 distclean
 	ccache -c 
@@ -76,7 +86,8 @@ echo ""
 echo "SideCore kernel for J710xx"
 echo "1) Clean Workspace"
 echo "2) Build kernel"
-echo "3) Exit"
+echo "3) Clean products"
+echo "4) Exit"
 echo ""
 read -p "Please select an option " prompt
 echo ""
@@ -86,6 +97,9 @@ if [ $prompt == "1" ]; then
 elif [ $prompt == "2" ]; then
 	OPTION_2; 
 elif [ $prompt == "3" ]; then
+	OPTION_3;
+	rerun;
+elif [ $prompt == "4" ]; then
 	exit
 fi
 

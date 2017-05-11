@@ -47,8 +47,26 @@ delete("/system/lib/libsecure_storage.so");
 package_extract_dir("system", "/system");
 set_metadata_recursive(0, 0, 0755, 0644, "/system/app");
 set_metadata_recursive(0, 0, 0755, 0644, "/system/lib");
+
+set_metadata_recursive(0, 0, 0755, 0644, "/system/priv-app/GooglePackageInstaller/GooglePackageInstaller.apk");
+set_metadata_recursive(0, 0, 0755, 0644, "/system/etc/floating_feature.xml");
+
 set_metadata_recursive("/system/app/mcRegistry", "uid", 0, "gid", 0, "dmode", 0755, "fmode", 0644, "capabilities", 0x0, "selabel", "u:object_r:system_file:s0");
 set_metadata("/system/lib/libsecure_storage.so", "uid", 0, "gid", 0, "mode", 0644, "capabilities", 0x0, "selabel", "u:object_r:system_file:s0");
+
+#########################################################
+#Aroma implementation
+
+#If STOCK overlay is selected
+if
+file_getprop("/tmp/aroma-data/tweaks.prop","selected.1") == "2" 
+then
+	delete_recursive("/system/priv-app/GooglePackageInstaller/GooglePackageInstaller.apk");
+endif;
+
+
+
+
 ui_print("Installing busybox...");
 run_program("/system/xbin/busybox", "--install", "-s", "/system/xbin");
 ui_print("");

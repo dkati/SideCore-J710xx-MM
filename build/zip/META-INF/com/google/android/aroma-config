@@ -1,0 +1,169 @@
+
+###################################################################################################################
+#
+# Initializing Rom Information
+#
+ini_set("rom_name",             "SideCore kernel");
+ini_set("rom_version",          "2.0");
+ini_set("rom_author",           "side & zombie99 @xda");
+ini_set("rom_device",           "Only for J710xx");
+ini_set("rom_date",             "xxxxxx");
+
+###################################################################################################################
+#
+# Show Simple Splash
+#
+#splash(
+#  #-- Duration 3000ms / 3 seconds
+#    3000,
+#
+#  #-- <AROMA Resource Dir>/S7.png
+#    "jdc"
+#);
+#i need no splash screen.just animated
+##################################################################################################################
+#
+# Show Animated Splash
+#
+#anisplash(
+  #-- Number of Loop
+#    1,
+
+   #-- Frame 1 [ Image, duration in millisecond ]. <AROMA Resource Dir>/splash/a[0..23].png
+#	"splash/a0", 20,
+#	"splash/a1", 20,
+#	"splash/a2", 20,
+#	"splash/a3", 20,
+#	"splash/a4", 20,
+#	"splash/a5", 20,
+#	"splash/a6", 20,
+#	"splash/a7", 20,
+#	"splash/a8", 20,
+#	"splash/a9", 20,
+#	"splash/a10", 20,
+#	"splash/a11", 20,
+#	"splash/a12", 2000,
+#	"splash/a13", 20,
+#	"splash/a14", 20,
+#	"splash/a15", 20,
+#	"splash/a16", 20,
+#	"splash/a17", 20,
+#	"splash/a18", 20,
+#	"splash/a19", 20,
+#	"splash/a20", 20,
+#	"splash/a21", 20,
+#	"splash/a22", 20,
+#	"splash/a23", 20
+#);
+
+#initialize theme from the beginning
+theme("side");
+
+###################################################################################################################
+#
+# Set Small Font to Support all fonts
+#
+fontresload( "0", "ttf/Roboto-Regular.ttf;ttf/DroidSansFallback.ttf;", "12" ); #-- Use sets of font (Font Family)
+fontresload( "1", "ttf/Roboto-Regular.ttf;ttf/DroidSansFallback.ttf;", "14" ); #-- Use sets of font (Font Family)
+
+
+###################################################################################################################
+#
+# STEP 2 - INCLUDE EXAMPLE = Language Selection & Form Example
+#
+#include("language_select.edify");
+
+
+###################################################################################################################
+#
+# View Information
+#
+viewbox(
+    "",
+    "You are about to install <b>"+
+	  ini_get("rom_name")+
+	"</b> for the <b>"+ini_get("rom_device")+"</b>.\n\n"+
+    "Rom Information:\n\n"+
+	  "  Rom\t:  <b><#selectbg_g>"+ini_get("rom_name")+"</#></b>\n"+
+	  "  Version\t:  <b><#selectbg_g>"+ini_get("rom_version")+"</#></b>\n"+
+      "  Author\t:  <b><#selectbg_g>"+ini_get("rom_author")+"</#></b>\n"+
+      "  Device\t:  <b><#selectbg_g>"+ini_get("rom_device")+"</#></b>\n"+
+      "  Date\t:  <b><#selectbg_g>"+ini_get("rom_date")+"</#></b>\n\n\n\n"+
+	"Press Next to Continue ...",
+    "@welcome"
+);
+
+###################################################################################################################
+#
+# STEP 3 - LICENSE
+#
+
+###################################################################################################################
+#
+# STEP 4 - CHANGELOG
+#
+textbox(
+  #-- Title
+    "Changelog",
+
+  #-- Subtitle
+    "Read about changes/updates",
+
+  #-- Icon
+    "@update",
+
+  #-- Arg 4
+    resread("changelog.txt")
+);
+
+
+###################################################################################################################
+# KERNEL
+#
+
+selectbox(
+  #-- Title
+    "Tweaks corner",
+
+  #-- Sub Title
+    "Please choose one of the options:",
+
+  #-- Icon: <AROMA Resource Dir>/icons/personalize.png or <ThemeDir>/icon.personalize.png
+    "@install",
+
+  #-- Will be saved in /tmp/aroma/kernel.prop
+    "tweaks.prop",
+
+  #-----------------------------[ Selectbox Without Group ]-------------------------#
+  # TITLE         			   |  SUBTITLE                          | Initial Value #
+  #----------------------------+------------------------------------+---------------#
+  "Screen Overlay",                                ""                                                      ,2,   #-- Group 1. key = "selected.1"
+  "Remove Screen Overlay",                               "Removes Screen Overlay feature"          ,1,   #-- selected.1 = 1
+  "Dont touch it",                                 "Do nothing.Stay stock"                ,0   #-- selected.1 = 2
+
+);
+
+
+
+###################################################################################################################
+#
+# INSTALLATION PROCESS
+#
+setvar("retstatus",
+  install(
+	#-- Title
+      "Installing",
+
+	#-- Installation Process message
+	  "<b>"+ini_get("rom_name")+"</b> is being installed.\n\n"+
+      "Please wait till the installation completes.",
+
+	#-- Installation Icon
+      "@install",
+
+	#-- Installation Finish Message
+      "The installation has successfully completed.\n\nPress <b>Finish</b> to continue."
+  )
+);
+
+#---- FINISH

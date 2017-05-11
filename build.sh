@@ -6,7 +6,7 @@ VERSION_NUMBER=2.1
 
 TOOLCHAIN_DIR=toolchain/bin/aarch64-linux-android-
 TC=uber
-#stock/linaro/uber
+#stock/uber
 THISDIR=`readlink -f .`;
 
 FILENAME=SideCore-${VERSION_NUMBER}-`date +"[%H-%M]-[%d-%m]-J710xx-STOCK-MM"`.zip

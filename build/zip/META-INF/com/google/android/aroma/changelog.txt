@@ -2,6 +2,7 @@
 ---------------------------------------------------
 <*>Boot EVO stock rom</*>
 <*>Add Ofast build flag</*>
+<*>Built with UBER tc </*>
 <*>Permissive selinux</*>
 <*>Init.d</*>
 <*>Google apps wakelock killer</*>

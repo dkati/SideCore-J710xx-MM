@@ -17,3 +17,5 @@
 <*>Use only alucard from custom governors</*>
 <*>Fully activated USB functions</*>
 <*>Optimized C/ASM flags on toolchain</*>
+<*>Refactor CTS bypass </*>
+<*>Set noop while sleeping</*>

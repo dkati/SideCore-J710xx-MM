@@ -15,6 +15,5 @@
 <*>Kernel:Reduce sleep time</*>
 <*>ksm:Optimize KSM to gain battery life</*>
 <*>Use only alucard from custom governors</*>
-<*>sched: make gentle_fair_sleepers switchable via sysfs</*>
 <*>Fully activated USB functions</*>
 <*>Optimized C/ASM flags on toolchain</*>

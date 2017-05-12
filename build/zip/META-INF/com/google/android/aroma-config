@@ -139,7 +139,11 @@ selectbox(
   #----------------------------+------------------------------------+---------------#
   "Screen Overlay",                                ""                                                      ,2,   #-- Group 1. key = "selected.1"
   "Remove Screen Overlay",                               "Removes Screen Overlay feature"          ,1,   #-- selected.1 = 1
-  "Dont touch it",                                 "Do nothing.Stay stock"                ,0   #-- selected.1 = 2
+  "Dont touch it",                                 "Do nothing.Stay stock"                ,0,   #-- selected.1 = 2
+  
+  "Root access",                              ""                                    ,2,
+  "SuperSU",                                                                         ,1, #-- selected.2 = 1
+  "Magisk", ""										,0  #-- selected.2 = 2
 
 );
 

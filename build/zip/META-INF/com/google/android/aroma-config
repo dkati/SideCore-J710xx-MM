@@ -142,7 +142,7 @@ selectbox(
   "Dont touch it",                                 "Do nothing.Stay stock"                ,0,   #-- selected.1 = 2
   
   "Root access",                              ""                                    ,2,
-  "SuperSU",                                                                         ,1, #-- selected.2 = 1
+  "SuperSU",   ""                                                                      ,1, #-- selected.2 = 1
   "Magisk", ""										,0  #-- selected.2 = 2
 
 );

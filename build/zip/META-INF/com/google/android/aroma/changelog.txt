@@ -1,4 +1,20 @@
-
 <b><#selectbg_g>Changes since SideCore-v1.0</#></b>
 ---------------------------------------------------
-<*>Podia</*>
+<*>Boot EVO stock rom</*>
+<*>Add Ofast build flag</*>
+<*>Permissive selinux</*>
+<*>Init.d</*>
+<*>Google apps wakelock killer</*>
+<*>Knox fake reset</*>
+<*>Uber Toolchain</*>
+<*>Add aroma with options
+	<*>Remove screen overlay</*>
+	<*>Use SuperSU or magisk</*>
+</*>
+<*>don't update idle time if cpu offline</*>
+<*>Kernel:Reduce sleep time</*>
+<*>ksm:Optimize KSM to gain battery life</*>
+<*>Use only alucard from custom governors</*>
+<*>sched: make gentle_fair_sleepers switchable via sysfs</*>
+<*>Fully activated USB functions</*>
+<*>Optimized C/ASM flags on toolchain</*>

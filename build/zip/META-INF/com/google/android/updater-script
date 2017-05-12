@@ -76,15 +76,16 @@ ui_print("");
 if
 file_getprop("/tmp/aroma-data/tweaks.prop","selected.2") == "1" 
 then
-	ui_print("Flashing SuperSU...");
-	package_extract_dir("supersu", "/tmp/supersu");
-	run_program("/sbin/busybox", "unzip", "/tmp/supersu/supersu.zip", "META-INF/com/google/android/update-binary", "-d", "/tmp/supersu");
-	run_program("/sbin/busybox", "sh", "/tmp/supersu/META-INF/com/google/android/update-binary", "dummy", "1", "/tmp/supersu/supersu.zip");
+ui_print("Flashing SuperSU...");
+package_extract_dir("supersu", "/tmp/supersu");
+run_program("/sbin/busybox", "unzip", "/tmp/supersu/supersu.zip", "META-INF/com/google/android/update-binary", "-d", "/tmp/supersu");
+run_program("/sbin/busybox", "sh", "/tmp/supersu/META-INF/com/google/android/update-binary", "dummy", "1", "/tmp/supersu/supersu.zip");
 endif;
 
 #########################################################
 #Magisk
-if
+if file_getprop("/tmp/aroma-data/tweaks.prop","selected.2") == "2" 
+then
 ui_print("Installing Magisk Manager...");
 package_extract_dir("jdc/magisk/packages/manager", "/system/priv-app/Magisk");
 set_metadata_recursive(0, 0, 0755, 0644,  "/system/priv-app/Magisk/MagiskManager.apk");

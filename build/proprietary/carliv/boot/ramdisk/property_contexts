@@ -139,9 +139,6 @@ volte.incall.camera.enable u:object_r:media_prop:s0
 persist.volte.cmr.fps u:object_r:media_prop:s0
 
 
-persist.storage         u:object_r:storage_prop:s0
-sys.internal.emulated   u:object_r:storage_prop:s0
-
 slog.reload                u:object_r:slog_prop:s0
 slog.step              u:object_r:slog_prop:s0
 slog.top_logdir u:object_r:slog_prop:s0

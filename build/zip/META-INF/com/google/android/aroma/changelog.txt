@@ -9,13 +9,11 @@
 <*>Uber Toolchain</*>
 <*>Add aroma with options
 	<*>Remove screen overlay</*>
-	<*>Use SuperSU or magisk</*>
 </*>
 <*>don't update idle time if cpu offline</*>
-<*>Kernel:Reduce sleep time</*>
+<*>Kernel:Reduce sleep time timeout</*>
 <*>ksm:Optimize KSM to gain battery life</*>
 <*>Use only alucard from custom governors</*>
 <*>Fully activated USB functions</*>
 <*>Optimized C/ASM flags on toolchain</*>
-<*>Refactor CTS bypass </*>
 <*>Set noop while sleeping</*>

@@ -75,10 +75,11 @@ ui_print("");
 #SuperSU
 if
 file_getprop("/tmp/aroma-data/tweaks.prop","selected.2") == "1" 
-ui_print("Flashing SuperSU...");
-package_extract_dir("supersu", "/tmp/supersu");
-run_program("/sbin/busybox", "unzip", "/tmp/supersu/supersu.zip", "META-INF/com/google/android/update-binary", "-d", "/tmp/supersu");
-run_program("/sbin/busybox", "sh", "/tmp/supersu/META-INF/com/google/android/update-binary", "dummy", "1", "/tmp/supersu/supersu.zip");
+then
+	ui_print("Flashing SuperSU...");
+	package_extract_dir("supersu", "/tmp/supersu");
+	run_program("/sbin/busybox", "unzip", "/tmp/supersu/supersu.zip", "META-INF/com/google/android/update-binary", "-d", "/tmp/supersu");
+	run_program("/sbin/busybox", "sh", "/tmp/supersu/META-INF/com/google/android/update-binary", "dummy", "1", "/tmp/supersu/supersu.zip");
 endif;
 
 #########################################################

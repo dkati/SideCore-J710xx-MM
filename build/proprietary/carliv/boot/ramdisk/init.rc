@@ -14,6 +14,7 @@ import /init.carrier.rc
 import /init.sec_debug.rc
 import /init.container.rc
 import /init.rilcommon.rc
+import /init.services.rc
 
 on early-init
     # Set init and its forked children's oom_adj.
@@ -697,7 +698,7 @@ on boot
     chmod 0220 /sys/module/lowmemorykiller/parameters/minfree
     # for BT MAC address
     mkdir /efs/bluetooth 0775 radio system
-    # if already exist
+    # _if already exist
     chown radio system /efs/bluetooth
     chmod 0775 /efs/bluetooth
 
@@ -1458,12 +1459,12 @@ service media /system/bin/mediaserver
 service apaservice /system/bin/apaservice
     class main
     user jack
-    group inet sdcard_rw sdcard_r media_rw shell
+    group system inet sdcard_rw sdcard_r media_rw shell
 
 service jackservice /system/bin/jackservice
     class main
     user jack
-    group audio inet shell
+    group system audio inet shell
     
 # One shot invocation to deal with encrypted volume.
 service defaultcrypto /system/bin/vdc --wait cryptfs mountdefaultencrypted

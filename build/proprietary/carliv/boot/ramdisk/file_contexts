@@ -945,10 +945,23 @@
 #SEC remove: /dev/socket/rild3        u:object_r:rild_socket:s0
 /dev/socket/srtserver    u:object_r:srt_socket:s0
 
-/dev/stty_td[0-9]*       u:object_r:tty_device:s0
-/dev/stty_lte[0-9]*      u:object_r:tty_device:s0
+/dev/stty_w12            u:object_r:tty_device:s0
+/dev/stty_lte12          u:object_r:tty_device:s0
+/dev/stty_td12           u:object_r:tty_device:s0
+/dev/stty_lte31          u:object_r:tty_device:s0
+/dev/stty_lte[0-9]       u:object_r:radio_device:s0
+/dev/stty_lte10          u:object_r:radio_device:s0
+/dev/stty_lte11          u:object_r:tty_device:s0
+#/dev/stty_td[0-9]*       u:object_r:tty_device:s0
+#/dev/stty_lte[0-9]*      u:object_r:tty_device:s0
 
 /dev/Trout_FM            u:object_r:audio_device:s0
+#SEC removed: /dev/pipe                u:object_r:audio_device:s0
+/dev/sprd_efuse_otp      u:object_r:efuse_device:s0
+#SEC remove: /dev/block/mmcblk0p2     u:object_r:mmcblk_device:s0
+#SEC remove: /dev/block/mmcblk0p3     u:object_r:mmcblk_device:s0
+#SEC remove: /dev/block/mmcblk0p4     u:object_r:mmcblk_device:s0
+
 #SEC remove: /dev/pipe                u:object_r:audio_device:s0
 #SEC remove: /dev/block/mmcblk0p[0-9]* u:object_r:mmcblk_device:s0
 #SEC remove: /dev/block/mmcblk0boot0  u:object_r:mmcblk_device:s0
@@ -981,10 +994,12 @@
 /dev/ttyV0           u:object_r:gps_device:s0
 
 #SEC remove: /dev/block/mmcblk0p[3-6] u:object_r:nv_mmcblk_device:s0
+/dev/spipe_w[0-9]        u:object_r:spipe_device:s0
 /dev/spipe_w[0-9]*        u:object_r:spipe_device:s0
 /dev/spipe_wcn[0-9]*     u:object_r:spipe_device:s0
 /dev/spipe_lte2          u:object_r:spipe_device:s0
-/dev/spipe_lte9      u:object_r:modemdriver_vpad_device:s0
+/dev/spipe_lte9          u:object_r:spipe_device:s0
+#/dev/spipe_lte9      u:object_r:modemdriver_vpad_device:s0
 /dev/spipe_lte10          u:object_r:spipe_device:s0
 #############################
 # System files
@@ -1001,7 +1016,7 @@
 /system/bin/refnotify   u:object_r:refnotify_exec:s0
 /system/bin/modemd      u:object_r:rild_exec:s0
 /system/bin/phoneserver u:object_r:rild_exec:s0
-/system/bin/modem_control u:object_r:modem_control_exec:s0
+/system/bin/modem_control u:object_r:rild_exec:s0
 /system/bin/rild_sp u:object_r:rild_exec:s0
 /system/bin/cp_diskserver u:object_r:cp_diskserver_exec:s0
 #SEC duplicated : /system/bin/download    u:object_r:download_exec:s0
@@ -1012,6 +1027,7 @@
 /system/bin/tune2fs       u:object_r:fsck_exec:s0
 /system/bin/resize2fs     u:object_r:fsck_exec:s0
 /system/bin/GPSenseEngine       u:object_r:GPSenseEngine_exec:s0
+/system/bin/wcnd     	u:object_r:wcnd_exec:s0
 
 #SEC duplicated : /system/bin/batterysrv u:object_r:batterysrv_exec:s0
 #SEC duplicatd : /system/bin/gpsd        u:object_r:gpsd_exec:s0
@@ -2069,6 +2085,7 @@
 /system/bin/smdexe	u:object_r:smdexe_exec:s0
 /system/bin/sshd	u:object_r:sshd_exec:s0
 /system/bin/taadaemon           u:object_r:tzdaemon_exec:s0
+/system/bin/sysprof	u:object_r:sysprof_exec:s0
 /system/bin/tzdaemon            u:object_r:tzdaemon_exec:s0
 /system/bin/sysmon	u:object_r:sysmon_exec:s0
 /system/bin/tima_dump_log	u:object_r:tima_dump_exec:s0

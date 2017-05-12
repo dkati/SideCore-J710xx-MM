@@ -9,52 +9,6 @@ ini_set("rom_author",           "side & zombie99 @xda");
 ini_set("rom_device",           "Only for J710xx");
 ini_set("rom_date",             "xxxxxx");
 
-###################################################################################################################
-#
-# Show Simple Splash
-#
-#splash(
-#  #-- Duration 3000ms / 3 seconds
-#    3000,
-#
-#  #-- <AROMA Resource Dir>/S7.png
-#    "jdc"
-#);
-#i need no splash screen.just animated
-##################################################################################################################
-#
-# Show Animated Splash
-#
-#anisplash(
-  #-- Number of Loop
-#    1,
-
-   #-- Frame 1 [ Image, duration in millisecond ]. <AROMA Resource Dir>/splash/a[0..23].png
-#	"splash/a0", 20,
-#	"splash/a1", 20,
-#	"splash/a2", 20,
-#	"splash/a3", 20,
-#	"splash/a4", 20,
-#	"splash/a5", 20,
-#	"splash/a6", 20,
-#	"splash/a7", 20,
-#	"splash/a8", 20,
-#	"splash/a9", 20,
-#	"splash/a10", 20,
-#	"splash/a11", 20,
-#	"splash/a12", 2000,
-#	"splash/a13", 20,
-#	"splash/a14", 20,
-#	"splash/a15", 20,
-#	"splash/a16", 20,
-#	"splash/a17", 20,
-#	"splash/a18", 20,
-#	"splash/a19", 20,
-#	"splash/a20", 20,
-#	"splash/a21", 20,
-#	"splash/a22", 20,
-#	"splash/a23", 20
-#);
 
 #initialize theme from the beginning
 theme("side");
@@ -92,11 +46,6 @@ viewbox(
 	"Press Next to Continue ...",
     "@welcome"
 );
-
-###################################################################################################################
-#
-# STEP 3 - LICENSE
-#
 
 ###################################################################################################################
 #
@@ -139,11 +88,7 @@ selectbox(
   #----------------------------+------------------------------------+---------------#
   "Screen Overlay",                                ""                                                      ,2,   #-- Group 1. key = "selected.1"
   "Remove Screen Overlay",                               "Removes Screen Overlay feature"          ,1,   #-- selected.1 = 1
-  "Dont touch it",                                 "Do nothing.Stay stock"                ,0,   #-- selected.1 = 2
-  
-  "Root access",                              ""                                    ,2,
-  "SuperSU",   ""                                                                      ,1, #-- selected.2 = 1
-  "Magisk", ""										,0  #-- selected.2 = 2
+  "Dont touch it",                                 "Do nothing.Stay stock"                ,0  #-- selected.1 = 2
 
 );
 

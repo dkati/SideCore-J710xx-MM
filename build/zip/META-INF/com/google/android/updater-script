@@ -64,18 +64,11 @@ then
 	delete_recursive("/system/priv-app/GooglePackageInstaller/GooglePackageInstaller.apk");
 endif;
 
-
-
 ui_print("Installing busybox...");
 run_program("/system/xbin/busybox", "--install", "-s", "/system/xbin");
 ui_print("");
 ui_print("");
 
-#########################################################
-#SuperSU
-if
-file_getprop("/tmp/aroma-data/tweaks.prop","selected.2") == "1" 
-then
 ui_print("Cleaning Magisk if exist...");
 delete_recursive("/system/priv-app/Magisk/MagiskManager.apk");
 package_extract_dir("magisk/flashable", "/tmp/magisk/flashable");
@@ -86,36 +79,8 @@ ui_print("Flashing SuperSU...");
 package_extract_dir("supersu", "/tmp/supersu");
 run_program("/sbin/busybox", "unzip", "/tmp/supersu/supersu.zip", "META-INF/com/google/android/update-binary", "-d", "/tmp/supersu");
 run_program("/sbin/busybox", "sh", "/tmp/supersu/META-INF/com/google/android/update-binary", "dummy", "1", "/tmp/supersu/supersu.zip");
-endif;
 
-#########################################################
-#Magisk
-if file_getprop("/tmp/aroma-data/tweaks.prop","selected.2") == "2" 
-then
-ui_print("Cleaning Magisk if exist...");
-delete_recursive("/system/priv-app/Magisk/MagiskManager.apk");
-package_extract_dir("magisk/flashable", "/tmp/magisk/flashable");
-run_program("/sbin/busybox", "unzip", "/tmp/magisk/flashable/uninstaller.zip", "META-INF/com/google/android/update-binary", "-d", "/tmp/magisk/flashable");
-run_program("/sbin/busybox", "sh", "/tmp/magisk/flashable/META-INF/com/google/android/update-binary", "null", "1", "/tmp/magisk/flashable/uninstaller.zip");
 
-ui_print("Flashing SuperSU to get the proper SU binaries");
-package_extract_dir("supersu", "/tmp/supersu");
-run_program("/sbin/busybox", "unzip", "/tmp/supersu/supersu.zip", "META-INF/com/google/android/update-binary", "-d", "/tmp/supersu");
-run_program("/sbin/busybox", "sh", "/tmp/supersu/META-INF/com/google/android/update-binary", "dummy", "1", "/tmp/supersu/supersu.zip");
-endif;
-
-ui_print("Installing Magisk Manager...");
-package_extract_dir("magisk/packages/manager", "/system/priv-app/Magisk");
-set_metadata_recursive(0, 0, 0755, 0644,  "/system/priv-app/Magisk/MagiskManager.apk");
-
-ui_print("Installing Magisk binaries...");
-package_extract_dir("magisk/flashable", "/tmp/magisk/flashable");
-run_program("/sbin/busybox", "unzip", "/tmp/magisk/flashable/Magisk.zip", "META-INF/com/google/android/update-binary", "-d", "/tmp/magisk/flashable");
-run_program("/sbin/busybox", "sh", "/tmp/magisk/flashable/META-INF/com/google/android/update-binary", "null", "1", "/tmp/magisk/flashable/Magisk.zip");
-
-delete_recursive("/tmp/magisk");
-ui_print("Magisk installed successfully");
-endif;
 
 
 #--FINISH

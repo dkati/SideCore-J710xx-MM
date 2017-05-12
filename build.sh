@@ -9,7 +9,7 @@ TC=uber
 #stock/uber
 THISDIR=`readlink -f .`;
 
-FILENAME=SideCore-${VERSION_NUMBER}-`date +"[%H-%M]-[%d-%m]-J710xx-STOCK-MM"`.zip
+FILENAME=SideCore-${VERSION_NUMBER}-`date +"[%H-%M]-[%d-%m]-J710xx-MM-[UNIFIED]"`.zip
 
 OPTION_3()
 {
